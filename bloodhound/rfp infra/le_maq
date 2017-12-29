@@ -1,0 +1,164 @@
+
+
+clear 
+
+
+# Grupos de usuáos 
+
+
+echo "         Grupos de usuarios " 
+
+var=`cat /etc/group | grep -i arbordes  | awk -F\: '{ print $1 }' `
+if [ $? -ne 0 ] ; then
+   echo "grupo arbordes nao encontrado "
+else
+   echo "Encontrado grupo : $var"
+fi
+echo "" 
+var=''
+var=`cat /etc/group | grep -i arborout  | awk -F\: '{ print $1 }' `
+if [ $? -ne 0 ] ; then
+   echo "grupo arborout nao encontrado "
+else
+   echo "Encontrado grupo : $var"
+fi
+echo "" 
+var=''
+var=`cat /etc/group | grep -i arboradm  | awk -F\: '{ print $1 }' `
+if [ $? -ne 0 ] ; then
+   echo "grupo arboradm nao encontrado "
+else
+   echo "Encontrado grupo : $var"
+fi
+
+var=`ls -lart /bin/ksh /usr/bin/ksh | awk '{ print ( $9 ) }' `
+if [ $? -ne 0 ] ; then
+   echo "Link para o Ksh  nao encontrado "
+else
+   echo "Encontrado  link do ksh "
+   echo "  [ $var ] "
+fi
+var=''
+echo "" 
+qt=`arp -a  | wc -l `
+if [ $qt -lt 3 ] ; then 
+   echo " ARP :Encontradas apenas $qt linhas , arp nao instalado verificar " 
+else 
+   echo " ARP :Encontradas $qt linhas , arp  instalado verificar " 
+   arp -a 
+fi 
+
+
+
+echo "" 
+
+pty=`rpm -qa | grep python-2. | grep -v report | grep -v addon | grep -v lib`
+
+if [ ! -z "$pty" ] ; then 
+   
+   echo "Python instalado   : $pty " 
+else 
+   echo "Python nao encontrado verificar " 
+fi 
+
+
+
+echo "" 
+pr=`rpm -qa | grep perl-core`
+if [ ! -z "$pr" ] ; then 
+   echo "Perl instalado   : $pr " 
+else 
+   echo "Perl  nao encontrado verificar " 
+fi 
+
+
+
+echo "" 
+pa=`rpm -qa | grep pax`
+
+if [ ! -z "$pa" ] ; then 
+   echo "Pax instalado   : $pa " 
+else 
+   echo "Pax nao encontrado verificar " 
+fi 
+
+
+
+echo "" 
+rp=`rpm -qa | grep termcap`
+
+if [ ! -z "$pa" ] ; then 
+   echo "Termcap instalado   : $rp " 
+else 
+   echo "Termcap nao encontrado verificar " 
+fi 
+
+var=''
+echo "" 
+var=`rpm -qa | grep ksh ` 
+if [ ! -z "$var" ] ; then 
+   echo "Ksh instalado : $var " 
+else 
+   echo "Ksh nao instalado , Verificar  " 
+fi 
+
+
+
+
+
+var=''
+echo ""
+var=`rpm -qa | grep gcc | head -1`
+
+if [ ! -z "$var" ] ; then
+   echo "GCC instalado : $var "
+else
+   echo "GCC nao instalado , Verificar  "
+fi
+
+
+var=''
+echo ""
+var=`rpm -qa | grep java | grep -v SYM | grep -v tzdata | grep -v devel | sort -u`
+
+if [ ! -z "$var" ] ; then
+   echo "Java  instalado : "
+   echo $var 
+else
+   echo "Java  nao instalado , Verificar  "
+fi
+
+
+#var=`find / -name sqlplus -print 2>/dev/null | grep -i product  `
+#if [ ! -z "$var" ] ; then
+   #echo "sqlplus  instalado : "
+   #echo $var 
+#else
+   #echo "Oracle nao instalado , Verificar  "
+##fi
+
+var=''
+var=`df -kv | grep arbor `
+echo "Filesystems Arbor e bp_aplic " 
+
+disp_disk()
+{
+   tot=`echo $var | awk '{ print $2 }' `
+   use=`echo $var | awk '{ print $3 }' `
+   fre=`echo $var | awk '{ print $4 }' `
+   fsi=`echo $var | awk '{ print $6 }' `
+
+   echo "Filesystem : $fsi "
+   echo "Total .....: $tot "
+   echo "Usado .....: $use "
+   echo "Livre .....: $fre "
+
+}
+echo ""
+var=`df -vh | grep arbor  `
+disp_disk
+
+echo ""
+var=`df -vh | grep bp_aplic`
+disp_disk
+
