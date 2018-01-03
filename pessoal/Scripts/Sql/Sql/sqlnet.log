@@ -1,0 +1,100 @@
+
+
+***********************************************************************
+Fatal NI connect error 12560, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=BEQ)(PROGRAM=oracle)(ARGV0=oracleORCL)(ARGS='(DESCRIPTION=(LOCAL=YES)(ADDRESS=(PROTOCOL=beq)))')))(CONNECT_DATA=(SID=ORCL)(CID=(PROGRAM=C:\ORACLE\ORA81\BIN\SQLPLUSW.EXE)(HOST=CHENNIG)(USER=chennig))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 8.1.5.0.0 - Production
+	Oracle Bequeath NT Protocol Adapter for 32-bit Windows: Version 8.1.5.0.0 - Production
+  Time: 08-MAI-00 11:12:24
+  Tracing not turned on.
+  Tns error struct:
+    nr err code: 0
+    ns main err code: 12560
+    TNS-12560: TNS:erro do adaptador de protocolo
+    ns secondary err code: 0
+    nt main err code: 102
+    TNS-00102: Erro de operação da vinculação Palavra-Chave-Valor
+    nt secondary err code: 0
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12560, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=BEQ)(PROGRAM=oracle)(ARGV0=oracleORCL)(ARGS='(DESCRIPTION=(LOCAL=YES)(ADDRESS=(PROTOCOL=beq)))')))(CONNECT_DATA=(SID=ORCL)(CID=(PROGRAM=C:\ORACLE\ORA81\BIN\SQLPLUSW.EXE)(HOST=CHENNIG)(USER=chennig))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 8.1.5.0.0 - Production
+	Oracle Bequeath NT Protocol Adapter for 32-bit Windows: Version 8.1.5.0.0 - Production
+  Time: 10-MAI-00 14:38:04
+  Tracing not turned on.
+  Tns error struct:
+    nr err code: 0
+    ns main err code: 12560
+    TNS-12560: TNS:erro do adaptador de protocolo
+    ns secondary err code: 0
+    nt main err code: 102
+    TNS-00102: Erro de operação da vinculação Palavra-Chave-Valor
+    nt secondary err code: 0
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12535, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=172.31.11.183)(PORT=1526)))(CONNECT_DATA=(SID=bmm)(CID=(PROGRAM=C:\ORACLE\ORA81\BIN\SQLPLUSW.EXE)(HOST=CHENNIG)(USER=chennig))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 8.1.5.0.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 8.1.5.0.0 - Production
+  Time: 10-MAI-00 14:39:23
+  Tracing not turned on.
+  Tns error struct:
+    nr err code: 0
+    ns main err code: 12535
+    TNS-12535: TNS:tempo esgotado para operação
+    ns secondary err code: 12560
+    nt main err code: 505
+    TNS-00505: Operação com tempo de espera
+    nt secondary err code: 60
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12535, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=172.31.11.183)(PORT=1526)))(CONNECT_DATA=(SID=bmm)(CID=(PROGRAM=C:\ORACLE\ORA81\BIN\SQLPLUSW.EXE)(HOST=CHENNIG)(USER=chennig))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 8.1.5.0.0 - Production
+	Windows NT TCP/IP NT Protocol Adapter for 32-bit Windows: Version 8.1.5.0.0 - Production
+  Time: 10-MAI-00 14:40:20
+  Tracing not turned on.
+  Tns error struct:
+    nr err code: 0
+    ns main err code: 12535
+    TNS-12535: TNS:tempo esgotado para operação
+    ns secondary err code: 12560
+    nt main err code: 505
+    TNS-00505: Operação com tempo de espera
+    nt secondary err code: 60
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12560, connecting to:
+ (DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=BEQ)(PROGRAM=oracle)(ARGV0=oracleORCL)(ARGS='(DESCRIPTION=(LOCAL=YES)(ADDRESS=(PROTOCOL=beq)))')))(CONNECT_DATA=(SID=ORCL)(CID=(PROGRAM=C:\ORACLE\ORA81\BIN\SQLPLUSW.EXE)(HOST=CHENNIG)(USER=chennig))))
+
+  VERSION INFORMATION:
+	TNS for 32-bit Windows: Version 8.1.5.0.0 - Production
+	Oracle Bequeath NT Protocol Adapter for 32-bit Windows: Version 8.1.5.0.0 - Production
+  Time: 10-MAI-00 17:43:27
+  Tracing not turned on.
+  Tns error struct:
+    nr err code: 0
+    ns main err code: 12560
+    TNS-12560: TNS:erro do adaptador de protocolo
+    ns secondary err code: 0
+    nt main err code: 102
+    TNS-00102: Erro de operação da vinculação Palavra-Chave-Valor
+    nt secondary err code: 0
+    nt OS err code: 0

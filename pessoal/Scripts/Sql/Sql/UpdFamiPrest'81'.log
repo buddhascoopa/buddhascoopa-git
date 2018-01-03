@@ -1,0 +1,102 @@
+SQL> drop index ibge.fami'&&ano'_1134_1026_FK_I;
+antigo   1: drop index ibge.fami'&&ano'_1134_1026_FK_I
+novo   1: drop index ibge.fami'81'_1134_1026_FK_I
+drop index ibge.fami'81'_1134_1026_FK_I
+                    *
+ERRO na linha 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> --
+SQL> create unique index Fami'&&ano'_uk1
+  2  on Fami'&&ano' (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+  3  tablespace pnadi19'&&ano';
+antigo   1: create unique index Fami'&&ano'_uk1
+novo   1: create unique index Fami'81'_uk1
+antigo   2: on Fami'&&ano' (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+novo   2: on Fami'81' (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+antigo   3: tablespace pnadi19'&&ano'
+novo   3: tablespace pnadi19'81'
+create unique index Fami'81'_uk1
+                        *
+ERRO na linha 1:
+ORA-00969: missing ON keyword 
+
+
+SQL> --
+SQL> set serveroutput on
+SQL> set arrays 5000
+SQL> --
+SQL> execute UpdFami('FAREN1&&ano','Fami&&ano','RDMSFAM101','CODCLFAMIL1');
+ERRO:
+ORA-01012: not logged on 
+
+
+BEGIN UpdFami('FAREN181','Fami81','RDMSFAM101','CODCLFAMIL1'); END;
+
+*
+ERRO na linha 1:
+ORA-20002: Erro GENERICO: Verifique PILHA DE ERROS ABAIXO PARA MAIORES DETALHES-5506 
+ORA-06512: at "IBGE.UPDFAMI", line 82 
+ORA-00028: your session has been killed 
+ORA-06512: at line 1 
+
+
+
+Erro de acesso ao pacote DBMS_APPLICATION_INFO
+ERRO: 
+ORA-00022: invalid session ID; access denied 
+
+
+SQL> conn ibge@bmm
+Conectado.
+SQL> undef ano
+SQL> accept ano char prompt "Entre com o Ano (AA): "
+Entre com o Ano (AA): set echo on
+SQL> spool UpdFamiPrest"&&ano".log
+SP2-0333: Nome de arquivo spool inválido:"UpdFamiPrest"set echo on".log" (caractere incorreto: ' ')
+SQL> drop index ibge.fami"&&ano"_1134_1026_FK_I;
+antigo   1: drop index ibge.fami"&&ano"_1134_1026_FK_I
+novo   1: drop index ibge.fami"set echo on"_1134_1026_FK_I
+drop index ibge.fami"set echo on"_1134_1026_FK_I
+                    *
+ERRO na linha 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> --
+SQL> create unique index Fami"&&ano"_uk1
+  2  on Fami"&&ano" (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+  3  tablespace pnadi19"&&ano";
+antigo   1: create unique index Fami"&&ano"_uk1
+novo   1: create unique index Fami"set echo on"_uk1
+antigo   2: on Fami"&&ano" (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+novo   2: on Fami"set echo on" (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+antigo   3: tablespace pnadi19"&&ano"
+novo   3: tablespace pnadi19"set echo on"
+create unique index Fami"set echo on"_uk1
+                        *
+ERRO na linha 1:
+ORA-00969: missing ON keyword 
+
+
+SQL> --
+SQL> ed
+Gravou file afiedt.buf
+
+  1  undef ano
+  2  accept ano char prompt "Entre com o Ano (AA): "
+  3  set echo on
+  4  spool UpdFamiPrest"&&ano".log
+  5  drop index ibge.fami"&&ano"_1134_1026_FK_I;
+  6  --
+  7  create unique index Fami"&&ano"_uk1
+  8  on Fami"&&ano" (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+  9  tablespace pnadi19"&&ano";
+ 10* --
+SQL> @temp
+SQL> undef ano
+SQL> accept ano char prompt "Entre com o Ano (AA): "
+Entre com o Ano (AA): 81
+SQL> set echo on
+SQL> spool UpdFamiPrest"&&ano".log

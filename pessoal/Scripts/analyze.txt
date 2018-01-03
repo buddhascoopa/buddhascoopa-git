@@ -1,0 +1,56 @@
+#!/bin/ksh
+#
+# total_files.sh - Monitorar o total de datafiles de uma instância
+
+# Intervencao                   Responsavel Data
+# ----------------------------- ----------- ----------
+# Criacao                       Ana Paula   07/05/2002
+# Adaptacao para OI             Ana Paula   07/05/2002
+# Adaptacao para Ctrl-M OI      Ana Paula   ?
+
+
+. $HOME/.profile
+
+export ORACLE_SID=$1
+export SAIDA=0
+export perc_files=0.80
+
+cd /usr/monitor/scripts
+
+sqlplus -s << EOF > total_files.lst
+system/`psinst $ORACLE_SID`
+set echo off feedback off linesize 1000 pagesize 0 heading off trimspool on
+set serveroutput on 
+declare 
+  tot_files_perm number:=0;
+  tot_files number:=0; 
+ begin 
+  select value into tot_files_perm from v\$parameter where name = 'db_files';
+  select count(*) into tot_files from v\$datafile;
+  if (tot_files/tot_files_perm) > $perc_files  then
+    dbms_output.put_line('O total de datafiles '||tot_files||'está maior que 80% do total de db_files: '||tot_files_perm);
+ end if;
+ end;
+/
+exit
+EOF
+if [ -s total_files.lst ]
+then
+  echo "To: oracleoi@telemar.com.br" > total_files.msg
+  echo Subject: `hostname`: Problemas de maximo numero de extends nos objetos $ORACLE_SID >> extends_objetos.msg
+  cat total_files.lst >> total_files.msg
+  mail oracleoi@telemar.com.br < total_files.msg
+  echo "Avise ao Suporte Oracle"
+  echo "---------------------------------------------------------------------"
+  echo "`hostname`: Num total datafiles da instancia $ORACLE_SID"
+  echo "---------------------------------------------------------------------"
+  cat total_files.lst
+  echo "---------------------------------------------------------------------"
+  SAIDA=1
+
+rm total_files.lst  total_files.msg
+fi
+exit $SAIDA
+
+
+

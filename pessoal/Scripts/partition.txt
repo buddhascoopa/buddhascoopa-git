@@ -1,0 +1,290 @@
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040801 VALUES LESS THAN (TO_DATE('2004-08-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040802 VALUES LESS THAN (TO_DATE('2004-08-03 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040803 VALUES LESS THAN (TO_DATE('2004-08-04 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040804 VALUES LESS THAN (TO_DATE('2004-08-05 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040805 VALUES LESS THAN (TO_DATE('2004-08-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040806 VALUES LESS THAN (TO_DATE('2004-08-07 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040807 VALUES LESS THAN (TO_DATE('2004-08-08 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040808 VALUES LESS THAN (TO_DATE('2004-08-09 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040809 VALUES LESS THAN (TO_DATE('2004-08-10 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040810 VALUES LESS THAN (TO_DATE('2004-08-11 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040811 VALUES LESS THAN (TO_DATE('2004-08-12 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040812 VALUES LESS THAN (TO_DATE('2004-08-13 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040813 VALUES LESS THAN (TO_DATE('2004-08-14 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040814 VALUES LESS THAN (TO_DATE('2004-08-15 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040815 VALUES LESS THAN (TO_DATE('2004-08-16 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040816 VALUES LESS THAN (TO_DATE('2004-08-17 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040817 VALUES LESS THAN (TO_DATE('2004-08-18 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040818 VALUES LESS THAN (TO_DATE('2004-08-19 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040819 VALUES LESS THAN (TO_DATE('2004-08-20 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040820 VALUES LESS THAN (TO_DATE('2004-08-21 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040821 VALUES LESS THAN (TO_DATE('2004-08-22 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040822 VALUES LESS THAN (TO_DATE('2004-08-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040823 VALUES LESS THAN (TO_DATE('2004-08-24 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040824 VALUES LESS THAN (TO_DATE('2004-08-25 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add PARTITION CS_P20040825 VALUES LESS THAN (TO_DATE('2004-08-26 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add  PARTITION CS_P20040826 VALUES LESS THAN (TO_DATE('2004-08-27 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add  PARTITION CS_P20040827 VALUES LESS THAN (TO_DATE('2004-08-28 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add  PARTITION CS_P20040828 VALUES LESS THAN (TO_DATE('2004-08-29 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;
+alter table prepago.dpw_ppv_sub_rec4_169
+add  PARTITION CS_P20040829 VALUES LESS THAN (TO_DATE('2004-08-30 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+        STORAGE(INITIAL 128M 
+                NEXT 128M 
+                MINEXTENTS 1 
+                MAXEXTENTS UNLIMITED 
+                FREELISTS 1 
+                FREELIST GROUPS 1)
+        TABLESPACE PPG_REC4_169_DATA_G02_P1
+        LOGGING;

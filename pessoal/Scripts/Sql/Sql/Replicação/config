@@ -1,0 +1,242 @@
+
+/*-- Connection to: REPADMIN@JECH.WORLD --*/
+
+
+/*---
+creating master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.create_master_repgroup(
+      gname => 'G_SCOTT',
+	  qualifier => '',
+	  group_comment => '');
+end;
+/
+
+/*---
+adding 'BONUS' to master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.create_master_repobject(
+      gname => '"G_SCOTT"',
+      type => 'TABLE',
+      oname => '"BONUS"',
+      sname => '"SCOTT"',
+      use_existing_object => TRUE,
+      copy_rows => TRUE);
+end;
+/
+
+/*---
+setting alternate key columns for 'BONUS'.
+---*/
+
+begin
+   dbms_repcat.set_columns(
+      sname => '"SCOTT"', oname => '"BONUS"',
+      column_list => '"JOB"');
+end;
+/
+
+/*---
+adding 'DEPT' to master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.create_master_repobject(
+      gname => '"G_SCOTT"',
+      type => 'TABLE',
+      oname => '"DEPT"',
+      sname => '"SCOTT"',
+      use_existing_object => TRUE,
+      copy_rows => TRUE);
+end;
+/
+
+/*---
+adding 'SALGRADE' to master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.create_master_repobject(
+      gname => '"G_SCOTT"',
+      type => 'TABLE',
+      oname => '"SALGRADE"',
+      sname => '"SCOTT"',
+      use_existing_object => TRUE,
+      copy_rows => TRUE);
+end;
+/
+
+/*---
+setting alternate key columns for 'SALGRADE'.
+---*/
+
+begin
+   dbms_repcat.set_columns(
+      sname => '"SCOTT"', oname => '"SALGRADE"',
+      column_list => '"GRADE"');
+end;
+/
+
+/*---
+adding 'EMP' to master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.create_master_repobject(
+      gname => '"G_SCOTT"',
+      type => 'TABLE',
+      oname => '"EMP"',
+      sname => '"SCOTT"',
+      use_existing_object => TRUE,
+      copy_rows => TRUE);
+end;
+/
+
+/*---
+adding master database 'HMLG' to master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.add_master_database(
+      gname => '"G_SCOTT"',
+      master => 'HMLG.WORLD',
+      use_existing_objects => TRUE,
+      copy_rows => TRUE,
+      propagation_mode => 'ASYNCHRONOUS');
+end;
+/
+/******** Error:
+ORA-04052: error occurred when looking up remote object SAPEP.SYS@HMLG.WORLD
+ORA-00604: error occurred at recursive SQL level 2
+ORA-01017: invalid username/password; logon denied
+ORA-02063: preceding line from HMLG
+ORA-06512: at "SYS.DBMS_REPCAT_UTL", line 2363
+ORA-06512: at "SYS.DBMS_REPCAT_MAS", line 1577
+ORA-06512: at "SYS.DBMS_REPCAT", line 113
+ORA-06512: at line 2
+********/
+
+/*---
+deleting master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.drop_master_repgroup(
+      gname => '"G_SCOTT"',
+	  drop_contents => FALSE,
+      all_sites => TRUE);
+end;
+/
+
+/*---
+creating master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.create_master_repgroup(
+      gname => 'G_SCOTT',
+	  qualifier => '',
+	  group_comment => '');
+end;
+/
+
+/*---
+adding 'BONUS' to master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.create_master_repobject(
+      gname => '"G_SCOTT"',
+      type => 'TABLE',
+      oname => '"BONUS"',
+      sname => '"SCOTT"',
+      use_existing_object => TRUE,
+      copy_rows => TRUE);
+end;
+/
+
+/*---
+setting alternate key columns for 'BONUS'.
+---*/
+
+begin
+   dbms_repcat.set_columns(
+      sname => '"SCOTT"', oname => '"BONUS"',
+      column_list => '"JOB"');
+end;
+/
+
+/*---
+generating replication support for table 'BONUS'.
+---*/
+
+begin 
+    dbms_repcat.generate_replication_support(
+      sname => '"SCOTT"',
+      oname => '"BONUS"', 
+      type => 'TABLE',
+      min_communication => TRUE); 
+end;
+/
+
+/*---
+resuming replication on group 'G_SCOTT'.
+---*/
+
+begin 
+   dbms_repcat.resume_master_activity(
+      gname => '"G_SCOTT"'); 
+end;
+/
+
+/*-- Connection to: REPADMIN@HMLG.WORLD --*/
+
+
+/*-- Connection to: REPADMIN@JECH.WORLD --*/
+
+
+/*-- Connection to: REPADMIN@HMLG.WORLD --*/
+
+
+/*-- Connection to: REPADMIN@JECH.WORLD --*/
+
+
+/*---
+suspending replication on group 'G_SCOTT'.
+---*/
+
+begin 
+   dbms_repcat.suspend_master_activity(
+      gname => '"G_SCOTT"'); 
+end;
+/
+
+/*---
+adding master database 'HMLG' to master group 'G_SCOTT'.
+---*/
+
+begin
+   dbms_repcat.add_master_database(
+      gname => '"G_SCOTT"',
+      master => 'HMLG.WORLD',
+      use_existing_objects => TRUE,
+      copy_rows => TRUE,
+      propagation_mode => 'ASYNCHRONOUS');
+end;
+/
+/******** Error:
+ORA-04068: existing state of packages has been discarded
+ORA-04068: existing state of packages has been discarded
+ORA-04068: existing state of packages (HMLG.WORLD) has been discarded
+ORA-04063: package body "SYS.DBMS_REPCAT_UTL" has errors
+ORA-06508: PL/SQL: could not find program unit being called
+ORA-06512: at "SYS.DBMS_REPCAT_RPC", line 1587
+ORA-06512: at "SYS.DBMS_REPCAT_UTL", line 2363
+ORA-06512: at "SYS.DBMS_REPCAT_MAS", line 1577
+ORA-06512: at "SYS.DBMS_REPCAT", line 113
+ORA-06512: at line 2
+********/

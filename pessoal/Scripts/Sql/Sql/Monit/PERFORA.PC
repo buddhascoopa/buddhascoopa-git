@@ -1,0 +1,611 @@
+/*
+  Programa de coleta de dados do Oracle para analise de performance
+  Data.: 26/5/1995
+*/
+
+#include <stdio.h>
+#include <string.h> 
+#include <time.h>
+
+#define CONNSTR2 "matd2p"
+#define USR2     "dbac"
+#define PASS2    "d2pmat"
+#define DB2      "matd2p"
+#define DB1      "outro"
+
+exec sql include sqlca.h;
+exec oracle option (release_cursor=yes);
+exec oracle option (hold_cursor=no);
+
+int dia_inic, dia_fim, hora_inic, hora_fim, ret, io=0;
+char *nomearq = ".bancos.ora";
+char *nomearqerro = "/tmp/perfora.erro";
+time_t t;
+struct tm *dt;
+
+FILE *fopen(),*arq1,*arqerro;
+
+exec sql begin declare section;
+   char usr1[8];
+   char pass1[9];
+   char connstr1[31];
+   char dbn[8];
+   char *db1      = DB1;
+   char *usr2     = USR2;
+   char *pass2    = PASS2;
+   char *connstr2 = CONNSTR2;
+   char *db2      = DB2;
+   char dbdata[15];
+   float bc;
+   float lc;
+   float dd;
+   float rb;
+   float lbl;
+   float sorto;
+   float mtspd1;
+   float mtspd2;
+   float ss;
+   int   nusr;
+   int   nlic;
+   int   lb;
+   long  vsga; 
+   long  ltfs;
+   long  dbt;
+   long  uc;
+   long  wr;
+   long  tfbr;
+exec sql end declare section;
+
+void sqlerror();
+void fileio();
+float buffercache();
+float librarycache();
+float datadictionary();
+float rollback();
+float logbufferlatch();
+float sortora();
+float dispatcher1();
+float dispatcher2();
+float sharedserver();
+int usuarios();
+int licencas();
+int logbuffer();
+long sga();
+long longfullscan();
+long dbtrans();
+long ucalls();
+long wrequests();
+long fetchbyrowid();
+
+main()
+{
+ t=time(NULL);
+ dt=localtime(&t);
+
+ if ((arq1 = fopen(nomearq,"r")) == NULL)
+    {
+     printf("Erro abertura do arquivo: %s",nomearq);
+     exit(1);
+    }
+
+ exec sql connect :usr2 identified by :pass2 at :db2 using :connstr2;
+ if (sqlca.sqlcode != 0)
+    {
+     sqlerror();
+     exit(1);
+    }
+
+ exec sql at :db2 select to_char(sysdate,'DDMMYY HH24:MI:SS')
+    into :dbdata
+    from dual; 
+
+ while(1)
+ {
+  strcpy(dbn,"        ");
+  ret = fscanf(arq1,"%s %s %s %s %d %d %d %d %d",dbn,connstr1,usr1,pass1,&dia_inic,&dia_fim,&hora_inic,&hora_fim,&io);
+  if (ret == EOF)
+     break;
+
+  if (dia_inic > 0) 
+     if ((dt->tm_wday < dia_inic)||(dt->tm_wday > dia_fim))
+        continue;
+  if (hora_inic > 0)
+     if ((dt->tm_hour < hora_inic)||(dt->tm_hour > hora_fim))
+        continue;
+     
+  exec sql connect :usr1 identified by :pass1 at :db1 using :connstr1;
+  if (sqlca.sqlcode != 0)
+     {
+      sqlerror();
+      continue;
+     }
+
+  bc = buffercache();
+  lc = librarycache(); 
+  dd = datadictionary();
+  rb = rollback();
+  lb = logbuffer();
+  lbl = logbufferlatch();
+  mtspd1 = dispatcher1();
+  mtspd2 = dispatcher2();
+  ss = sharedserver();
+  nusr = usuarios();
+  nlic = licencas();
+  sorto = sortora();
+  vsga = sga();
+  ltfs = longfullscan();
+  dbt = dbtrans();
+  uc = ucalls();
+  wr = wrequests();
+  tfbr = fetchbyrowid();
+
+  exec sql at :db2 insert into oraperf (instance,data,bc,lc,dd,nusr,rd,lbl,
+sort,sga,mtspd1,mtspd2,ss,ltfs,dbtrans,uc,wr,tfbr,nlic,lb)
+values(:dbn,:dbdata,:bc,:lc,:dd,:nusr,:rb,:lbl,:sorto,:vsga,:mtspd1,:mtspd2,:ss,:ltfs,:dbt,:uc,:wr,:tfbr,:nlic,:lb);
+  exec sql at :db2 commit;
+
+  if (dt->tm_min < 10 && io)
+     fileio();
+
+  exec sql at :db1 rollback release;
+ }
+
+ fclose(arq1);
+
+ exec sql at :db2 rollback release;
+ exec sql at :db1 rollback release;
+
+ exit(0);
+}
+
+void sqlerror()
+{
+ char tmsg[20];
+ if ((arqerro = fopen(nomearqerro,"a")) == NULL)
+    {
+     printf("Erro abertura do arquivo: %s",nomearqerro);
+     exit(1);
+    }
+ exec sql whenever sqlerror continue;
+ strftime(tmsg, 20, "%d/%m/%Y %H:%M:%S",dt);
+ fprintf(arqerro, "%8s %20s %40s\n",dbn,tmsg,sqlca.sqlerrm.sqlerrmc);
+ fclose(arqerro);
+}
+
+float buffercache()
+{
+ exec sql begin declare section;
+   float dbg;
+   float cg;
+   float pr;
+   float ret, ret1;
+   float dr,bg,exec,uexec;
+   char  un[30];
+   char  sql[1000];
+ exec sql end declare section;
+
+ exec sql at :db1 declare cvsio cursor for
+    select nvl(username,'ORACLE'),block_gets, consistent_gets, physical_reads
+    from v$session vs, v$sess_io vsio
+    where vs.sid = vsio.sid;
+ 
+ exec sql at :db1 declare cvsqlio cursor for
+    select sql_text, disk_reads, buffer_gets, executions, users_executing
+    from v$sqlarea
+    where disk_reads > 250;
+
+ exec sql at :db1 select value
+    into :dbg
+    from v$sysstat
+    where name = 'db block gets';
+
+ exec sql at :db1 select value
+    into :cg 
+    from v$sysstat
+    where name = 'consistent gets';
+
+ exec sql at :db1 select value
+    into :pr 
+    from v$sysstat
+    where name = 'physical reads'; 
+
+ ret = ((1-(pr/(dbg+cg)))*100);
+ if (ret > 100)
+    ret = 100;
+/* if (ret <= 70)
+ {
+  exec sql open cvsio;
+  for (;;)
+  {
+   exec sql fetch cvsio into :un, :dbg, :cg, :pr;
+   if (sqlca.sqlcode < 0)
+      break;
+
+   ret1 = ((1-(pr/(dbg+cg)))*100);
+          
+   exec sql at :db2 insert into io_user
+      values (:dbn, :dbdata, :un, :ret1);
+   exec sql at :db2 commit;  
+  }
+  exec sql close cvsio;
+
+  exec sql open cvsqlio;
+  for (;;)
+  {
+   exec sql fetch cvsqlio into :sql, :dr, :bg, :exec;
+   if (sqlca.sqlcode < 0)
+      break;
+
+   exec sql at :db2 insert into io_sql
+      values (:dbn, :dbdata, :sql, :dr, :bg, :exec, :uexec);
+   exec sql at :db2 commit;  
+  }
+  exec sql close cvsqlio;
+ }  */
+
+ return(ret);
+}
+
+float librarycache()
+{
+ exec sql begin declare section;
+    float e;
+    float cm;
+ exec sql end declare section;   
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select sum(pins), sum(reloads)
+    into :e,:cm
+    from v$librarycache;
+
+ return(((cm/e)*100));
+}
+
+float datadictionary()
+{
+ exec sql begin declare section;
+    float g;
+    float gm;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select sum(gets), sum(getmisses)
+    into :g,:gm
+    from v$rowcache;
+
+ return(((gm/(g+gm))*100));
+}
+
+int usuarios()
+{
+ exec sql begin declare section;
+    int ua;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select count(*)-1
+    into :ua
+    from v$session
+    where type = 'USER';
+
+ return(ua);
+} 
+
+int licencas()
+{
+ exec sql begin declare section;
+    int nl;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select count(*)-1
+    into :nl
+    from 
+     (select distinct username
+      from   v$session
+      where  type = 'USER');
+
+ return(nl);
+} 
+
+float rollback()
+{
+ exec sql begin declare section;
+    float suh;
+    float sub;
+    float uh;
+    float ub;
+    float sum;
+    float ret;
+    float gets;
+    float waits;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select sum(value)
+    into :sum
+    from v$sysstat
+    where name in ('db block gets','consistent gets');
+
+ exec sql at :db1 select count 
+    into :suh 
+    from v$waitstat
+    where class = 'system undo header';
+
+ ret = ((suh/sum)*100); 
+ 
+ exec sql at :db1 select count 
+    into :sub 
+    from v$waitstat
+    where class = 'system undo block';
+
+ if (ret < ((sub/sum)*100))
+    ret = ((sub/sum)*100);
+
+ exec sql at :db1 select count 
+    into :uh 
+    from v$waitstat
+    where class = 'undo header';
+
+ if (ret < ((uh/sum)*100))
+    ret = ((uh/sum)*100);
+
+ exec sql at :db1 select count 
+    into :ub 
+    from v$waitstat
+    where class = 'undo block';
+
+ if (ret < ((ub/sum)*100))
+    ret = ((ub/sum)*100);
+
+ exec sql at :db1 select sum(gets), sum(waits)
+    into :gets, :waits
+    from v$rollstat s, v$rollname n
+    where s.usn = n.usn;
+
+ if (ret < ((waits/gets)*100)) 
+    ret = ((waits/gets)*100);
+
+ return(ret);
+}
+
+int logbuffer()
+{
+ exec sql begin declare section;
+    int lb;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select value
+    into :lb
+    from v$sysstat
+    where name in ('redo log space requests');
+
+ return(lb);
+}
+
+float logbufferlatch()
+{
+ exec sql begin declare section;
+    float g;
+    float m;
+    float ig;
+    float im;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 
+    select sum(gets),sum(misses),sum(immediate_gets),sum(immediate_misses)
+    into :g,:m,:ig,:im
+    from v$latch l, v$latchname ln
+    where ln.name in ('redo allocation','redo copy') and ln.latch# = l.latch#;
+
+ return(((m/g)*100)>((im/ig)*100)?((m/g)*100):((im/ig)*100));
+} 
+
+float sortora()
+{
+ exec sql begin declare section;
+    float sm;
+    float sd;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select value
+    into :sm
+    from v$sysstat
+    where name = 'sorts (memory)';
+
+ exec sql at :db1 select value
+    into :sd 
+    from v$sysstat
+    where name = 'sorts (disk)';
+
+ return(((sd/(sm+sd))*100));
+}
+
+long sga()
+{
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql begin declare section;
+    float vsga;
+ exec sql end declare section;
+
+ exec sql at :db1 select sum(value)
+    into :vsga 
+    from v$sga;
+
+ return(vsga);
+}
+
+float dispatcher1()
+{
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql begin declare section;
+    float fd1;
+ exec sql end declare section;
+
+ exec sql at :db1 select nvl((sum(busy)/(sum(busy)+sum(abs(idle))))*100,0)
+    into :fd1 
+    from v$dispatcher
+    where network = 'tcp';
+
+ return(fd1);
+}
+
+float dispatcher2()
+{
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql begin declare section;
+    float fd2;
+ exec sql end declare section;
+
+ exec sql at :db1 select nvl(decode(sum(totalq),0,0,sum(wait)/sum(totalq)),0)/100 
+    into :fd2 
+    from v$queue q, v$dispatcher d
+    where d.network = 'tcp'
+      and q.type = 'DISPATCHER'
+      and q.paddr = d.paddr;
+
+ return(fd2);
+}
+
+float sharedserver()
+{
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql begin declare section;
+    float fss;
+ exec sql end declare section;
+
+ exec sql at :db1 select nvl(decode(sum(totalq),0,0,sum(wait)/sum(totalq)),0)/100 
+    into :fss 
+    from v$queue
+    where type = 'COMMON';
+
+ return(fss);
+}
+
+long longfullscan()
+{
+ exec sql begin declare section;
+    int lltfs;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select value
+    into :lltfs
+    from v$sysstat
+    where name in ('table scans (long tables)');
+
+ return(lltfs);
+}
+
+long fetchbyrowid()
+{
+ exec sql begin declare section;
+    int tfbr;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select value
+    into :tfbr
+    from v$sysstat
+    where name in ('table fetch by rowid');
+
+ return(tfbr);
+}
+
+long dbtrans()
+{
+ exec sql begin declare section;
+    long dbt;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select sum(value)
+    into :dbt
+    from v$sysstat
+    where name in ('user commits', 'user rollbacks');
+
+ return(dbt);
+}
+
+long ucalls()
+{
+ exec sql begin declare section;
+    long uc;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select value
+    into :uc
+    from v$sysstat
+    where name in ('user calls');
+
+ return(uc);
+}
+
+long wrequests()
+{
+ exec sql begin declare section;
+    long wr;
+ exec sql end declare section;
+
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql at :db1 select value
+    into :wr
+    from v$sysstat
+    where name in ('write requests');
+
+ return(wr);
+}
+
+void fileio()
+{
+ exec sql whenever sqlerror do sqlerror();
+
+ exec sql begin declare section;
+   char disco[257];
+   float io, iobl, read, write;
+ exec sql end declare section; 
+
+ exec sql at :db1 declare cfileio cursor for
+   select name, phyrds+phywrts, phyblkrd+phyblkwrt, phyrds, phywrts
+   from v$datafile df, v$filestat fs
+   where df.file# = fs.file#
+   and   name is not null
+   order by name;
+
+ exec sql open cfileio;
+
+ for (;;)
+ {
+  exec sql whenever not found do break;
+  
+  exec sql fetch cfileio into
+     :disco, :io, :iobl, :read, :write;
+
+  exec sql at :db2 insert into ioperf (instance,data,erro,disco,io,iobl,read,write)
+     values(:dbn,:dbdata,NULL,:disco,:io,:iobl,:read,:write);
+  exec sql at :db2 commit;
+ }
+
+ exec sql close cfileio;
+}

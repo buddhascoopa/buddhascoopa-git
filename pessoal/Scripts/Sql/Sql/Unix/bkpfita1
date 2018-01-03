@@ -1,0 +1,13 @@
+#!/bin/ksh
+tar cvf /dev/nrmt0h lista_fita1
+#
+echo "\n\n particao 1"
+dd if=/dev/rdrd/drd1 of=/dev/nrmt0h bs=1024000 conv=sync
+#
+echo "\n\n particao 2"
+dd if=/dev/rdrd/drd2 of=/dev/nrmt0h bs=1024000 conv=sync
+#
+echo "\n\n particao 3"
+dd if=/dev/rdrd/drd3 of=/dev/nrmt0h bs=1024000 conv=sync
+#
+mt -f /dev/rmt0h offline

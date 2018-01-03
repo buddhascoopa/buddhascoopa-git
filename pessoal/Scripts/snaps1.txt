@@ -1,0 +1,190 @@
+Query para Popular OIBIF_FATURA
+===============================
+
+CREATE MATERIALIZED VIEW OIBIF_FATURA
+REFRESH FORCE WITH ROWID 
+USING MASTER ROLLBACK SEGMENT RBSBIG
+AS 
+select  ACCOUNT_NO,
+        BILL_REF_NO ,
+        BILL_REF_RESETS,
+        INDEX_BILL_REF ,
+        INDEX_BILL_REF_RESETS,
+        BILL_SEQUENCE_NUM,
+        PARENT_ID,                        
+        HIERACHY_ID, 
+        FLAG_MULTICONTA, 
+        FLAG_NOTAFISCALFATURA,
+        FLAG_REJEICAO, 
+        MOTIVO_REJEICAO, 
+        EXTERNAL_ID_ACCOUNT,
+        EXTERNAL_ID_TYPE_ACCT,
+        EXTERNAL_ID_HRCH,
+        EXTERNAL_ID_TYPE_HRCH, 
+        QTD_INSTANCIA, 
+        ACCOUNT_CATEGORY,
+        IS_BUSINESS, 
+        MKT_CODE, 
+        MKT_CODE_DISPLAY,
+        CUST_COD_CFOP, 
+        DATE_ACTIVE,
+        DATE_INACTIVE,
+        CHILD_COUNT,
+        NUM_DOCUMENTO_CLIENTE,
+        INSC_ESTADUAL,
+        BILL_PERIOD, 
+        BILL_LNAME, 
+        BILL_ADDRESS1,
+        BILL_ADDRESS2,
+        BILL_ADDRESS3,
+        BILL_CITY,
+        BILL_STATE,
+        BILL_ZIP,
+        DESC_PONTO_REF_COBRANCA,
+        CUST_ADDRESS1,
+        CUST_ADDRESS2,
+        CUST_ADDRESS3,
+        CUST_CITY, 
+        CUST_STATE, 
+        CUST_ZIP,
+        DESC_OBJETIVO_CONTA, 
+        SPECIAL_CODE,
+        BILL_FMT_OPT,
+        MSG_GRP_ID, 
+        CUST_BANK_SORT_CODE,
+        IDENT_DEB_AUTOMATICO,
+        INTERIM_BILL_FLAG,
+        BILL_PREP_STATUS,
+        BACKOUT_STATUS,
+        BILL_DISP_METH,
+        BAR_CODE_FORMAT,
+        PAY_METHOD,
+        STATEMENT_DATE,
+        PAYMENT_DUE_DATE, 
+        ORIG_PPDD_DATE,
+        ULTIMO_PGTO,
+        SALDO_DEVEDOR,
+        VALOR_FATURA,
+        TOTAL_PAGAR,
+        PREV_CUTOFF_DATE,
+        TO_DATE,
+        FROM_DATE,
+        MKT_CODE_SHORT_DISPLAY,
+        PREP_TASK,
+        INTERIM_BILL_TYPE,
+        SERVER_ID, 
+        ULTIMO_NUM_SEQ_FATURA,
+        COD_BARRAS,
+        SERVICE_CENTER_ID,
+        INDIC_AMBAR
+   from atfadm.oibif_fatura of
+ where not exists (select null 
+                   from oiweb_controle b
+                   where b.account_no      = of.account_no
+		     and b.bill_ref_no     = of.bill_ref_no
+		     and b.bill_ref_resets = of.bill_ref_resets)
+   and of.is_business = 1;	
+
+
+
+Query para Popular OIBIF_DETALHE_FATURA
+=======================================
+
+
+CREATE MATERIALIZED VIEW OIBIF_DETALHE_FATURA
+REFRESH FORCE WITH ROWID 
+USING MASTER ROLLBACK SEGMENT RBSBIG
+AS 
+ select ofad.ACCOUNT_NO       ,
+ ofad.BILL_REF_NO             ,
+ ofad.BILL_REF_RESETS         ,
+ ofad.BILL_ROW                ,
+ ofad.SUBSCR_NO               ,
+ ofad.SUBSCR_NO_RESETS        ,
+ ofad.EXTERNAL_ID             ,
+ ofad.EXTERNAL_ID_TYPE        ,
+ ofad.ID_SECAO                ,
+ ofad.NUM_ORDEM               ,
+ ofad.PACKAGE_ID              ,
+ ofad.PACKAGE_DISPLAY_VALUES  ,
+ ofad.TYPE_CODE               ,
+ ofad.SUBTYPE_CODE            ,
+ ofad.DESCRIPTION             ,
+ ofad.SHORT_DESCRIPTION       ,
+ ofad.NRC_TYPE_GROUP          ,
+ ofad.TRACKING_ID             ,
+ ofad.TRACKING_ID_SERV        ,
+ ofad.BILLING_LEVEL           ,
+ ofad.PROVIDER_ID             ,
+ ofad.PROVIDER_CLASS          ,
+ ofad.OPEN_ITEM_ID            ,
+ ofad.OPEN_ITEM_ID_DESCRIPTION,
+ ofad.FROM_DATE               ,
+ ofad.TO_DATE                 ,
+ ofad.TRANS_DATE              ,
+ ofad.ANNOTATION              ,
+ ofad.ANNOTATION_ADJ          ,
+ ofad.CELL_DISPLAY_VALUE      ,
+ ofad.POINT_CLASS_CELL        ,
+ ofad.POINT_TARGET            ,
+ ofad.POINT_ORIGIN            ,
+ ofad.POINT_ID_TARGET         ,
+ ofad.POINT_CLASS_TARGET      ,
+ ofad.POINT_ID_ORIGIN         ,
+ ofad.POINT_CLASS_ORIGIN      ,
+ ofad.AMOUNT                  ,
+ ofad.AMOUNT_CREDITED         ,
+ ofad.UNITS                   ,
+ ofad.UNITS_CREDITED          ,
+ ofad.SECONDARY_AMOUNT        ,
+ ofad.PRIMARY_UNITS           ,
+ ofad.SECOND_UNITS            ,
+ ofad.THIRD_UNITS             ,
+ ofad.COMP_STATUS             ,
+ ofad.DISCOUNT                ,
+ ofad.DISCOUNT_ID             ,
+ ofad.ORIG_TYPE               ,
+ ofad.RATE_PERIOD             ,
+ ofad.RATE_PERIDO_DISPLAY     ,
+ ofad.TAX_RATE                ,
+ ofad.AMOUNT_CHAR             ,
+ ofad.DURACAO_CHAR            ,
+ ofad.VOLUME_CHAR             ,
+ ofad.NUM_SEQ_FATURA          ,
+ ofad.NUM_SEQ_FATURA_RESUMIDA ,
+ ofad.BILL_INVOICE_ROW        ,
+ ofad.MSG_ID                  ,
+ ofad.MSG_ID2                 ,
+ ofad.MSG_ID_SERV             ,
+ ofad.SPLIT_ROW_NUM           ,
+ ofad.QTDE_REGISTRO           ,
+ ofad.ADJ_QTY  
+ from atfadm.oibif_fatura ofa,
+      atfadm.oibif_detalhe_fatura ofad
+ where ofa.is_business = 1
+   and ofa.account_no = ofad.account_no
+   and ofa.bill_ref_no = ofad.bill_ref_no
+   and ofa.bill_ref_resets = ofad.bill_ref_resets
+   and not exists (select null 
+                 from oiweb_controle b
+                where b.account_no = ofa.account_no
+	          and b.bill_ref_no = ofa.bill_ref_no
+		  and b.bill_ref_resets = ofa.bill_ref_resets
+		  and b.index_bill_ref = ofa.index_bill_ref
+		  and b.index_bill_ref_resets = ofa.index_bill_ref_resets
+		  and b.bill_sequence_num = ofa.bill_sequence_num)	  
+
+
+TABELA DE CONTROLE QUE GUARDA TODAS AS FATURAS QUE JÁ FORAM PARA A WEB
+======================================================================
+  DROP TABLE OIWEB_CONTROLE; 
+
+CREATE TABLE OIWEB_CONTROLE ( 
+  ACCOUNT_NO             NUMBER (10), 
+  BILL_REF_NO            NUMBER (10), 
+  BILL_REF_RESETS        NUMBER (3), 
+  INDEX_BILL_REF         NUMBER (10), 
+  INDEX_BILL_REF_RESETS  NUMBER (3), 
+  BILL_SEQUENCE_NUM      NUMBER (10), 
+  DT_CONTROLE            DATE);
+

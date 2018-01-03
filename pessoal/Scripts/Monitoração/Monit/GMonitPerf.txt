@@ -1,0 +1,28 @@
+Rem
+Rem Programa com os grants necessários para o MonitPerf
+Rem
+Rem connect sys/manager
+Prompt Criando usuario monit
+create user monit identified by monit
+default tablespace users
+temporary tablespace temp
+quota unlimited on users;
+grant connect,resource to monit;
+grant select on v_$sysstat to monit;
+grant select on v_$statname to monit;
+grant select on v_$sesstat to monit;
+grant select on v_$session to monit;
+grant select on v_$librarycache to monit;
+grant select on v_$rowcache to monit;
+grant select on v_$filestat to monit;
+grant select on v_$parameter to monit;
+grant select on v_$datafile to monit;
+grant select on v_$lock to monit;
+grant select on v_$latch to monit;
+grant select on v_$sqlarea to monit;
+grant select on v_$latchname to monit;
+grant select on v_$sort_usage to monit;
+grant select on v_$sga to monit;
+grant select on v_$shared_server to monit;
+grant select on v_$sort_usage to monit;
+

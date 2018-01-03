@@ -1,0 +1,12 @@
+102.06.18 10:09 B Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ctl.sh <-- kenprd05 /usr/oibackup/scripts bkp_ctl.sh
+102.06.18 10:09 B Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ctl_all.sh <-- kenprd05 /usr/oibackup/scripts bkp_ctl_all.sh
+102.06.18 10:09 B Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ora.sh <-- kenprd05 /usr/oibackup/scripts bkp_ora.sh
+102.06.18 10:09 B Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ora_all.sh <-- kenprd05 /usr/oibackup/scripts bkp_ora_all.sh
+102.06.18 10:15 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ctl.sh <-- kenprd05 /usr/oibackup/scripts bkp_ctl.sh
+102.06.18 10:15 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ctl_all.sh <-- kenprd05 /usr/oibackup/scripts bkp_ctl_all.sh
+102.06.18 10:15 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ora.sh <-- kenprd05 /usr/oibackup/scripts bkp_ora.sh
+102.06.18 10:15 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ora_all.sh <-- kenprd05 /usr/oibackup/scripts bkp_ora_all.sh
+102.06.19 16:58 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ctl.sh --> 10.21.8.104 /usr/oibackup/scripts bkp_ctl.sh
+102.06.19 16:58 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ctl_all.sh --> 10.21.8.104 /usr/oibackup/scripts bkp_ctl_all.sh
+102.06.19 16:58 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ora.sh --> 10.21.8.104 /usr/oibackup/scripts bkp_ora.sh
+102.06.19 16:58 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Novo\bkp_ora_all.sh --> 10.21.8.104 /usr/oibackup/scripts bkp_ora_all.sh

@@ -1,0 +1,35 @@
+SQL> drop index ibge.fami&ano_1134_1026_FK_I;
+Entre o valor para ano_1134_1026_fk_i: 81
+antigo   1: drop index ibge.fami&ano_1134_1026_FK_I
+novo   1: drop index ibge.fami81
+drop index ibge.fami81
+                *
+ERRO na linha 1:
+ORA-01418: specified index does not exist 
+
+
+SQL> --
+SQL> create unique index Fami&ano_uk1
+  2  on Fami&ano (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+  3  tablespace pnadi19&ano;
+Entre o valor para ano_uk1: 
+antigo   1: create unique index Fami&ano_uk1
+novo   1: create unique index Fami
+antigo   2: on Fami&ano (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+novo   2: on Fami81 (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+antigo   3: tablespace pnadi19&ano
+novo   3: tablespace pnadi1981
+on Fami81 (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+           *
+ERRO na linha 2:
+ORA-01408: such column list already indexed 
+
+
+
+SQL> 
+SQL> @fami
+SQL> undef ano
+SQL> accept ano char prompt 'Entre com o Ano (AA): '
+Entre com o Ano (AA): 81
+SQL> set echo on
+SQL> spool UpdFamiPrest'&&ano'.log

@@ -1,0 +1,13 @@
+102.04.26 13:57 B Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\BKP_ONLINE.TAR <-- pcsprd01 /home/operpcs BKP_ONLINE.TAR
+102.04.26 13:59 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\beg_bkp.sql <-- pcsprd01 /home/operpcs beg_bkp.sql
+102.04.26 13:59 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\bkp_ctl.sql <-- pcsprd01 /home/operpcs bkp_ctl.sql
+102.04.26 13:59 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\bkp_online.sh <-- pcsprd01 /home/operpcs bkp_online.sh
+102.04.26 13:59 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\df_lista.sql <-- pcsprd01 /home/operpcs df_lista.sql
+102.04.26 13:59 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\end_bkp.sql <-- pcsprd01 /home/operpcs end_bkp.sql
+102.04.26 13:59 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\user_ora.sh <-- pcsprd01 /home/operpcs user_ora.sh
+102.04.26 16:10 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\beg_bkp.sql --> 10.21.8.104 /oracle/backup beg_bkp.sql
+102.04.26 16:10 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\bkp_ctl.sql --> 10.21.8.104 /oracle/backup bkp_ctl.sql
+102.04.26 16:10 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\bkp_online.sh --> 10.21.8.104 /oracle/backup bkp_online.sh
+102.04.26 16:10 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\df_lista.sql --> 10.21.8.104 /oracle/backup df_lista.sql
+102.04.26 16:10 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\end_bkp.sql --> 10.21.8.104 /oracle/backup end_bkp.sql
+102.04.26 16:10 A Y:\Tecnologia da Informacao\Coord Infra-Estrutura e Operacoes TI\Suporte DBA\Scripts\Backup\Antigo\user_ora.sh --> 10.21.8.104 /oracle/backup user_ora.sh

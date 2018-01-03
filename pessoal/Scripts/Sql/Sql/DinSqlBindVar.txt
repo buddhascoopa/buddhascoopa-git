@@ -1,0 +1,12 @@
+ cn := dbms_sql.open_cursor; 
+      sql_smnt := 'select n1_prkey, Text_string1, Text_string2, Text_string3, Text_string4
+     from '; 
+      sql_smnt := sql_smnt || 'parse_test where n1_prkey = :pkey'; 
+      dbms_sql.parse(cn, sql_smnt, dbms_sql.native); 
+      for i in 1..1000 loop 
+         begin 
+             dbms_sql.bind_variable(cn, ':pkey', i); 
+             rows_processed := dbms_sql.execute(cn); 
+          end; 
+      end loop; 
+      dbms_sql.close_cursor(cn);

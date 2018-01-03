@@ -1,0 +1,110 @@
+Entre com o id da conexao: 42
+antigo   7:   and s.sid = &id
+novo   7:   and s.sid =        42
+
+SQL_TEXT                                                         EXECUTIONS                         
+---------------------------------------------------------------- ----------                         
+INSERT INTO RA_INTERFACE_ERRORS                                           1                         
+(INTERFACE_LINE_ID,                                                                                 
+ MESSAGE_TEX                                                                                        
+                                                                                                    
+T,                                                                        1                         
+ INVALID_VALUE)                                                                                     
+SELECT                                                                                              
+INTERFACE_LINE_ID,                                                                                  
+'Flexfield da Tran                                                                                  
+                                                                                                    
+sação duplicado',                                                         1                         
+INTERFACE_LINE_ATTRIBUTE1||'.'||INTERFACE_LINE                                                      
+                                                                                                    
+_ATTRIBUTE2||'.'||INTERFACE_LINE_ATTRIBUTE3||'.'||INTERFACE_LINE          1                         
+_ATTRIBUTE4||'.'||INTERFACE_LINE_ATTRIBUTE5||'.'||INTERFACE_LINE          1                         
+_ATTRIBUTE6||'.'||INTERFACE_LINE_ATTRIBUTE7                               1                         
+FROM   RA_INTERFACE_                                                                                
+                                                                                                    
+LINES IL                                                                  1                         
+WHERE  IL.REQUEST_ID = 87322                                                                        
+AND    IL.INTERFACE_LINE_C                                                                          
+
+SQL_TEXT                                                         EXECUTIONS                         
+---------------------------------------------------------------- ----------                         
+                                                                                                    
+ONTEXT = 'ORDER ENTRY'                                                    1                         
+AND (EXISTS                                                                                         
+      (SELECT 'X'                                                                                   
+       FROM                                                                                         
+                                                                                                    
+   RA_CUSTOMER_TRX_LINES TL                                               1                         
+            WHERE  IL.INTERFACE_LINE                                                                
+                                                                                                    
+_CONTEXT = TL.INTERFACE_LINE_CONTEXT                                      1                         
+       AND IL.INTERFACE_LI                                                                          
+                                                                                                    
+NE_ATTRIBUTE1 = TL.INTERFACE_LINE_ATTRIBUTE1                              1                         
+       AND IL.INTER                                                                                 
+                                                                                                    
+FACE_LINE_ATTRIBUTE2 = TL.INTERFACE_LINE_ATTRIBUTE2                       1                         
+       AND I                                                                                        
+                                                                                                    
+L.INTERFACE_LINE_ATTRIBUTE3 = TL.INTERFACE_LINE_ATTRIBUTE3                1                         
+                                                                                                    
+                                                                                                    
+
+SQL_TEXT                                                         EXECUTIONS                         
+---------------------------------------------------------------- ----------                         
+  AND IL.INTERFACE_LINE_ATTRIBUTE4 = TL.INTERFACE_LINE_ATTRIBUTE          1                         
+4                                                                         1                         
+       AND IL.INTERFACE_LINE_ATTRIBUTE5 = TL.INTERFACE_LINE_AT                                      
+                                                                                                    
+TRIBUTE5                                                                  1                         
+       AND IL.INTERFACE_LINE_ATTRIBUTE6 = TL.INTERFACE_                                             
+                                                                                                    
+LINE_ATTRIBUTE6                                                           1                         
+       AND IL.INTERFACE_LINE_ATTRIBUTE7 = TL.INT                                                    
+                                                                                                    
+ERFACE_LINE_ATTRIBUTE7                                                    1                         
+      )                                                                                             
+OR     EXISTS                                                                                       
+      (SELECT 'X'                                                                                   
+                                                                                                    
+                                                                                                    
+      FROM   RA_INTERFACE_LINES L                                         1                         
+       WHERE  L.ROWID != IL.RO                                                                      
+                                                                                                    
+WID                                                                       1                         
+       AND    L.INTERFACE_LINE_CONTEXT = IL.INTERFACE_LINE_C                                        
+
+SQL_TEXT                                                         EXECUTIONS                         
+---------------------------------------------------------------- ----------                         
+                                                                                                    
+ONTEXT                                                                    1                         
+       AND L.INTERFACE_LINE_ATTRIBUTE1 = IL.INTERFACE_LIN                                           
+                                                                                                    
+E_ATTRIBUTE1                                                              1                         
+       AND L.INTERFACE_LINE_ATTRIBUTE2 = IL.INTERFA                                                 
+                                                                                                    
+CE_LINE_ATTRIBUTE2                                                        1                         
+       AND L.INTERFACE_LINE_ATTRIBUTE3 = IL.I                                                       
+                                                                                                    
+NTERFACE_LINE_ATTRIBUTE3                                                  1                         
+       AND L.INTERFACE_LINE_ATTRIBUTE4                                                              
+                                                                                                    
+= IL.INTERFACE_LINE_ATTRIBUTE4                                            1                         
+       AND L.INTERFACE_LINE_ATTRI                                                                   
+                                                                                                    
+BUTE5 = IL.INTERFACE_LINE_ATTRIBUTE5                                      1                         
+       AND L.INTERFACE_LINE                                                                         
+                                                                                                    
+_ATTRIBUTE6 = IL.INTERFACE_LINE_ATTRIBUTE6                                1                         
+       AND L.INTERFAC                                                                               
+
+SQL_TEXT                                                         EXECUTIONS                         
+---------------------------------------------------------------- ----------                         
+                                                                                                    
+E_LINE_ATTRIBUTE7 = IL.INTERFACE_LINE_ATTRIBUTE7                          1                         
+      ))                                                                                            
+                                                                                                    
+                                                                                                    
+
+28 linhas selecionadas.
+

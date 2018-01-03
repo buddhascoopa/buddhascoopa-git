@@ -1,0 +1,146 @@
+How do you display the difference in 2 dates in the format of
+ Years, Months, Days, Hours, Minutes, Seconds? Oracle functions are 
+ not able to display the difference.
+
+
+Problem Explanation
+===================
+    
+ Oracle functions are not able to display the difference
+ in 2 dates in the format of Years, Months, Days, Hours,
+ Minutes, Seconds. Oracle returns the difference in 
+ integer number of days and decimal portion of day. This
+ value must be converted manually to be displayed in the
+ format desired.
+
+ 
+Search Words:
+=============
+
+DATE DIFFERENCE FORMAT
+
+
+Solution Description: 
+===================== 
+  
+ You must use PL/SQL or other program code to display date 
+ differences in the format Years, Months, Days, Hours, 
+ Minutes, Seconds. 
+  
+ Because Oracle returns the difference in days and partial 
+ days, the difference must be manually converted to display  
+ it in the format of Years, Months, Days, Hours, Minutes,  
+ Seconds. 
+
+ 
+Solution Explanation 
+====================   
+ 
+ The following example loads a table with 2 records with  
+ 2 date values for starting and ending dates. The pl/sql  
+ block will calculate the difference of the dates and display 
+ the result in the format described above.     
+ 
+ 
+ create table ddiff 
+ (stdate date, 
+  endate date); 
+   
+ insert into ddiff (stdate,endate) values 
+ (to_date('01-jan-96 00:00:00','dd-mon-yy hh24:mi:ss'), 
+  to_date('01-mar-97 01:01:01','dd-mon-yy hh24:mi:ss')); 
+  
+ insert into ddiff (stdate,endate) values 
+ (to_date('01-jun-99 00:00:00','dd-mon-yy hh24:mi:ss'), 
+  to_date('03-oct-99 02:02:02','dd-mon-yy hh24:mi:ss')); 
+ 
+ set echo off 
+ set serverout on 
+ declare 
+   cursor c1 is 
+      select stdate,endate from ddiff; 
+   date_res number; 
+   end_now date; 
+   f_end_now char(20); 
+   st_now date; 
+   temp_now date; 
+   f_st_now char(20); 
+   yy_now number := 0; 
+   mm_now number := 0; 
+   dd_now number := 0; 
+   hh_now number := 0; 
+   f_hh_now number := 0; 
+   mi_now number := 0; 
+   f_mi_now number := 0; 
+   ss_now number := 0; 
+   f_ss_now number := 0; 
+ begin 
+   open c1; 
+   loop 
+     fetch c1 into st_now, end_now; 
+     exit when c1%notfound; 
+ 
+     -- Make st_now the earlier date 
+     if (end_now < st_now) then 
+       temp_now := end_now; 
+       end_now := st_now; 
+       st_now := temp_now; 
+     end if; 
+ 
+   f_end_now := to_char(end_now,'Mon-dd-yyyy hh24:mi:ss'); 
+     f_st_now  := to_char(st_now,'Mon-dd-yyyy hh24:mi:ss'); 
+ 
+     yy_now := trunc(months_between(end_now,st_now)/12); 
+     mm_now := mod(trunc(months_between(end_now,st_now)),12); 
+     dd_now :=   
+trunc(end_now-add_months(st_now,months_between(end_now,st_now))); 
+ 
+ date_res := (end_now-st_now); 
+ 
+     hh_now := (date_res-floor(date_res))*24; 
+ f_hh_now := trunc(hh_now); 
+     mi_now := (hh_now-floor(hh_now))*60; 
+     f_mi_now := trunc(mi_now); 
+     ss_now := (mi_now-floor(mi_now))*60; 
+     f_ss_now := round(ss_now); 
+ 
+     dbms_output.put_line(chr(10)|| 
+        'The time difference between '); 
+     dbms_output.put_line('starting date '||f_st_now); 
+     dbms_output.put_line('and ending date '|| 
+        f_end_now||' is'); 
+     dbms_output.put_line(chr(10)||yy_now||' year(s), '|| 
+       mm_now||' month(s), '||dd_now||' day(s)'); 
+     dbms_output.put_line('and '||f_hh_now||' hour(s), '|| 
+        f_mi_now||' minute(s), '|| 
+        f_ss_now||' second(s)'); 
+   end loop; 
+   close c1; 
+ end; 
+ / 
+ 
+ 
+ SQL> @ddiff 
+  
+ The time difference between 
+ starting date Jan-01-1996 00:00:00 
+ and ending date Mar-01-1997 01:01:01 is 
+  
+ 1 year(s), 2 month(s), 0 day(s) 
+ and 1 hour(s), 1 minute(s), 1 second(s) 
+  
+ The time difference between 
+ starting date Jun-01-1999 00:00:00 
+ and ending date Oct-03-1999 02:02:02 is 
+  
+ 0 year(s), 4 month(s), 2 day(s) 
+ and 2 hour(s), 2 minute(s), 2 second(s) 
+  
+ PL/SQL procedure successfully completed. 
+  
+ 
+References 
+========== 
+  
+PRE 1010103.6 
+PRE 1020700.6

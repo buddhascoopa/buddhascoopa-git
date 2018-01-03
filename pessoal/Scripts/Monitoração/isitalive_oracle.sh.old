@@ -1,0 +1,56 @@
+#!/bin/ksh
+# Parms
+# $1 : SID
+
+#Pre-reqs:
+# ORATAB
+
+SID=$1
+ORATAB=/var/opt/oracle/oratabarb
+
+
+
+unset ORACLE_HOME
+export ORACLE_HOME=`cat $ORATAB | grep "^${SID}:" | awk -F: '{print $2}'`
+if [ -z $ORACLE_HOME ] ; then
+   echo "Invalid SID : [$SID] !!!"
+   exit 1
+fi
+
+NLS_LANG=american_america.we8iso8859p1
+ORA_NLS32=$ORACLE_HOME/ocommon/nls/admin/data
+LD_LIBRARY_PATH=/usr/ucblib:$ORACLE_HOME/lib
+export TERM ORACLE_TERM ORACLE_HOME NLS_LANG
+ORACLE_PATH=.:$ORACLE_HOME/bin:$ORACLE_HOME/obackup/bin:/bin:/usr/bin:/usr/ccs/bin
+PATH=/usr/ccs/bin:/usr/ucb/bin:/usr/bin:/etc:/usr/sbin:/usr/ucb:$HOME/bin:/usr/bin/X11:/sbin:$ORACLE_HOME/bin:/opt/bin:/bin:/usr/bin:/GNU/bin/make:$SCRIPTS:
+export PATH
+TMPDIR=/tmp
+export ORACLE_SID=${SID}
+
+DATA=`date "+%Y%m%d_%H%M"`
+TESTFILE=${TMPDIR}/isitalive_${SID}_${DATA}.log
+${ORACLE_HOME}/bin/sqlplus -s system/`cat $HOME/.systempw`@${ORACLE_SID} << EOF>>${TESTFILE} 2>>${TESTFILE}
+set feed off
+set head off
+set verify off
+set pages 0
+select status from v\$instance;
+exit;
+EOF
+
+reterr=`grep "ORA-" ${TESTFILE} | wc -l`
+
+if [ $reterr -ne 0 ] ; then
+   echo "[$SID] not responding to a client connection !!!"
+   exit $reterr
+fi
+
+STATINST=`cat ${TESTFILE}`
+
+if [ ! "${STATINST}" = "OPEN"  ] ; then
+   echo "[$SID] in ${STATINST} status !!!"
+   exit 1
+else
+   rm $TESTFILE
+   exit 0
+fi

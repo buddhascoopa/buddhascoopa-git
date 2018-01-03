@@ -1,0 +1,14 @@
+Acao a tomar: Enviar email para OI-TI Infra Suporte Banco de Dados, e nos finais de semana com copia para o DBA de Plantao.
+
+***********
+* ATENCAO *
+***********
+Acionar OI-TI Infra Suporte Banco de Dados, qdo da ocorrencia dos erros abaixo:
+
+ORA-00018: maximum number of sessions exceeded
+
+ORA-01653: unable to extend ________ by ____ in tablespace ________
+
+ORA-16014: log _ sequence# _____ not archived, no available destinations
+
+ORA-16038: log __ sequence# _____ cannot be archived

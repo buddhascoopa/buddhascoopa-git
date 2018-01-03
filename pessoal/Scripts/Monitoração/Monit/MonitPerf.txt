@@ -1,0 +1,737 @@
+Rem 
+Rem Pacote de monitoração do Oracle
+Rem Data última atualização: 11:53 02/24/2000
+Rem
+create or replace package MonitPerf as
+	/* Declaração das funções externas */
+	procedure monit_sga;
+	procedure monit_io;
+        procedure monit_sql;
+	procedure exclue (pdata date);
+	function instancia return varchar2;
+	function tps (pdata_coleta date,ptr number) return number;
+	function tr return number;
+	function bc return number;
+	function ddc return number;
+	function lc return number;
+	function lb return number;
+	function sort return number;
+	function nsort return number;
+	function nusr return number;
+	function cpu return number;
+--        function jw return number;
+        function latch return number;
+        function mem return number;
+        function maxmem return number;
+        function ulock return number;
+        function ral return number;
+        function rcl return number;
+	function percpu (pdata_coleta date, pcpu number) return number;
+        function sga return number;
+        function memserver return number;
+        function areasort return number;
+end MonitPerf;
+/
+create or replace package body MonitPerf as
+	/* Corpo das funções */
+	/* Procedure principal da package MonitPerf */
+	procedure monit_sga is
+		wbc 	number;
+		wddc 	number;
+		wlc	number;
+		wlb	number;
+		wsort	number;
+		wnsort  number;
+		wnusr	number;
+		wtr	number;
+		wtps	number;
+		wcpu	number;
+		wpercpu	number;
+                wjw     number;
+                wlat	number;
+                wmem	number;
+		wmaxmem	number;
+		wlock	number;
+                wral	number;
+                wrcl	number;
+                wsga    number;
+                wmemserver number;
+                wareasort  number;
+		winstancia varchar2(15);
+		wdata_coleta date := sysdate;
+	begin
+		wbc := trunc(bc,0);
+		wddc := trunc(ddc,0);
+		wlc := trunc(lc,0);
+		wlb := trunc(lb,0);
+		wsort := trunc(sort,0);
+                wnsort := nsort;
+		wnusr := nusr;
+--                wjw := jw;
+		wtr := tr;
+                wlat := trunc(latch,1);
+                wral := trunc(ral,1);
+                wrcl := trunc(rcl,1);
+                wmem := mem;
+                wmaxmem := maxmem;
+		wlock := ulock;
+		wcpu := trunc(cpu,0);
+		wpercpu := percpu(wdata_coleta,wcpu);
+		winstancia := instancia;
+		wtps := tps(wdata_coleta,wtr);
+                wsga := sga;  
+                wareasort  := areasort;
+                wmemserver := memserver;
+		/* Armazena os dados coletados */
+		insert into TabMonitPerf                    (data_coleta,
+                    instancia,
+                    bc,
+                    ddc,
+                    lc,
+                    lb,
+                    sort,
+                    nusr,
+                    tps,
+                    tr,
+                    cpu,
+                    percpu,
+                    latch,
+                    mem,
+                    maxmem,
+                    ulock,
+                    ral,
+                    rcl,
+                    nsort,
+                    sga,
+                    memserver,
+                    sortarea) 
+		values
+                   (wdata_coleta,
+                    winstancia,
+                    wbc,
+                    wddc,
+                    wlc,
+                    wlb,
+                    wsort,
+                    wnusr,
+                    wtps,
+                    wtr,
+                    wcpu,
+                    wpercpu,
+                    wlat,
+                    wmem,
+                    wmaxmem,
+                    wlock,
+                    wral,
+                    wrcl,
+                    wnsort,
+                    wsga,
+                    wmemserver,
+                    wareasort);
+		commit;
+	end monit_sga;
+	/* Procedure que exclue registros da tabela tabmonitperf em função da data */
+	procedure exclue (pdata date) is
+	begin
+		delete from tabmonitperf
+		where trunc(data_coleta) <= trunc(pdata);
+		delete from tabmonitio
+		where trunc(data_coleta) <= trunc(pdata);
+		commit;
+	end exclue;
+	/* Procedure que coleta o IO do banco de dados */
+	procedure monit_io is
+		wfile	  number;
+		wwrtsant  number;
+		wrdsant   number;
+		wwps	  number;
+		wrps	  number;
+		wiops	  number;
+		wns       number;
+		wnw	  number;
+		wnr	  number;
+                wblrdant  number;
+                wblrd     number;
+                wblnrd    number;
+                wblrdps   number;
+                wblwrtant number;
+                wblwrt    number;
+                wblnwrt   number;
+                wblwrtps  number;
+                wblps     number;
+		winstancia varchar2(15);
+		wdata_coleta_ant date;
+		wdata_coleta	date := sysdate;
+		cursor c1 is
+			select	file#,
+				phyrds,
+				phywrts,
+                                phyblkrd,
+                                phyblkwrt
+			from	v$filestat;
+	begin
+		winstancia := instancia;
+		for c1_rec in c1 loop
+		   begin
+			select max(data_coleta)
+			into   wdata_coleta_ant
+			from   tabmonitio
+			where  file#     = c1_rec.file#
+			  and  instancia = winstancia;
+			/* */
+			select escrita,leitura,blrd,blwrt
+			into   wwrtsant,wrdsant,wblrdant,wblwrtant
+			from   tabmonitio
+			where  file#       = c1_rec.file#
+			  and  data_coleta = wdata_coleta_ant
+			  and  instancia   = winstancia
+                          and  rownum      = 1;
+			/* */
+			exception
+			   when no_data_found then
+				wdata_coleta_ant := null;
+				wwrtsant := 0;
+				wrdsant := 0;      
+		   end;
+		   if wdata_coleta_ant is null then
+		      wwps     := 0;
+		      wrps     := 0;
+		      wiops    := 0;
+                      wblrd    := 0;
+                      wblwrt   := 0;
+                      wblrdps  := 0;
+                      wblwrtps := 0;
+                      wblps    := 0;
+		   else
+		      wns     := (wdata_coleta - wdata_coleta_ant) * 86400;
+		      wnw     := c1_rec.phywrts - wwrtsant;
+		      wnr     := c1_rec.phyrds - wrdsant;
+                      wblnrd  := c1_rec.phyblkrd - wblrdant;
+                      wblnwrt := c1_rec.phyblkwrt - wblwrtant;
+		      if wns < 0 or wnw < 0 or wnr < 0 or wblnrd < 0 or wblnwrt < 0 then
+			wwps     := 0;
+			wrps     := 0;
+			wiops    := 0;
+                        wblrd    := 0;
+                        wblwrt   := 0;
+                        wblrdps  := 0;
+                        wblwrtps := 0;
+                        wblps    := 0;
+		      else
+			wwps     := trunc((wnw/wns),3);
+			wrps     := trunc((wnr/wns),3);
+			wiops    := trunc(((wnw+wnr)/wns),3);
+                        wblrdps  := trunc(((wblnrd)/wns),3);
+                        wblwrtps := trunc(((wblnwrt)/wns),3);
+			wblps    := trunc(((wblnrd+wblnwrt)/wns),3);
+		      end if;			
+		   end if;   
+		   /* */
+		   insert into tabmonitio 
+                      (file#,
+                       data_coleta,
+                       instancia,
+                       escrita,
+                       eps,
+                       leitura,
+                       lps,
+                       iops,
+                       blrd,
+                       blwrt,
+                       blps,
+                       blrdps,
+                       blwrtps)
+		   values
+		      (c1_rec.file#,
+                       wdata_coleta,
+                       winstancia,
+                       c1_rec.phywrts,
+                       wwps,
+                       c1_rec.phyrds,
+                       wrps,
+                       wiops,
+                       c1_rec.phyblkrd,
+                       c1_rec.phyblkwrt,
+                       wblps,
+                       wblrdps,
+                       wblwrtps);
+		   commit;   
+		end loop;
+	end monit_io;
+	/* Procedure que coleta o consumo por SQL */
+	procedure monit_sql is
+		winstancia varchar2(15);
+		wdata_coleta	date := sysdate;
+		cursor c1 is
+			select address,
+                               sql_text,
+			       disk_reads,
+			       buffer_gets,
+			       executions,
+                               parse_calls,
+			       (SHARABLE_MEM+PERSISTENT_MEM+RUNTIME_MEM) MEM,
+			       ROWS_PROCESSED
+			from v$sqlarea
+			where disk_reads > 1000
+                           or executions > 100
+			order by disk_reads desc;
+	begin
+		winstancia := instancia;
+		for c1_rec in c1 loop
+		   begin
+                      insert into tabmonitsql
+                         (instancia,
+                          address,
+                          data_coleta,
+                          sql_text,
+                          dr,
+                          bg,
+                          exec,
+                          mem,
+                          linhas,
+                          parse)
+                      values  
+                         (winstancia,
+                          c1_rec.address,
+                          wdata_coleta,
+                          c1_rec.sql_text,
+                          c1_rec.disk_reads,
+                          c1_rec.buffer_gets,
+                          c1_rec.executions,
+                          c1_rec.mem,
+                          c1_rec.rows_processed,
+                          c1_rec.parse_calls);
+   	              /* */
+		      exception
+		         when dup_val_on_index then
+                            update tabmonitsql a
+                               set a.data_coleta = wdata_coleta,
+                                   a.dr          = c1_rec.disk_reads,
+                                   a.bg          = c1_rec.buffer_gets,
+                                   a.exec        = c1_rec.executions,
+                                   a.mem         = c1_rec.mem,
+                                   a.linhas      = c1_rec.rows_processed,
+                                   a.parse       = c1_rec.parse_calls
+                               where a.instancia = winstancia
+                                 and a.address   = c1_rec.address;
+		   end;
+		   /* */
+		   commit;   
+		end loop;
+	end monit_sql;
+	/* Função que obtém a instância */
+	function instancia return varchar2 is
+		wdbname		varchar2(13);
+		wninstancia	varchar2(2);
+	begin
+		select upper(rtrim(value))
+		into   wdbname
+		from   v$parameter
+		where  name = 'db_name';
+		/* */
+		select rtrim(value)
+		into   wninstancia
+		from   v$parameter
+		where  name = 'instance_number';
+		/* */
+	 	return concat(wdbname,wninstancia);
+	end instancia;
+	/* Função que calcula o tamanho da SGA */
+	function sga return number is 
+                sga number;
+	begin
+		select sum(value)
+		into   sga
+		from   v$sga;
+		/* */
+		return sga;
+	end sga;
+	/* Função que calcula a memoria consumida pelos shared servers */
+	function memserver return number is 
+                memserver number;
+	begin
+		select sum(bytes)
+		into   memserver
+		from   v$shared_server;
+		/* */
+		return memserver;
+	end memserver;
+	/* Função que calcula utilização de buffer cache da SGA */
+	function bc return number is 
+		bc_perc number;
+		dbc number;
+		pr  number;
+		cg  number;
+	begin
+		select value 
+		into   dbc 
+		from   v$sysstat
+		where name = 'db block gets';
+		/* */
+		select value
+		into   pr
+		from   v$sysstat
+		where name = 'physical reads';
+		/* */
+		select value
+		into   cg
+		from   v$sysstat
+		where name = 'consistent gets';
+		/* */
+		bc_perc := (1-(pr/(dbc+cg)))*100;
+		return bc_perc;
+	end bc;
+	/* Função que calcula a utilização do data dictionary cache */
+	function ddc return number is
+		ddc_perc 	number;
+		wget 		number;
+		wmisses		number;
+	begin
+		select sum(gets),sum(getmisses)
+		into   wget,wmisses
+		from   v$rowcache;
+		/* */
+		ddc_perc := (1-(wmisses/wget))*100;
+		return ddc_perc;
+	end ddc;
+	/* Função que calcula a utilização da library cache */
+	function lc return number is
+		lc_perc	number;
+		wpin	number;
+		wreload	number;
+	begin
+		select sum(pins),sum(reloads)
+		into   wpin,wreload
+		from   v$librarycache;
+		/* */
+		lc_perc := (1-(wreload/wpin))*100;
+		return lc_perc;
+	end lc;
+	/* Função que calcula a utilização dos latches */
+	function latch return number is
+		lat_perc number;
+		wget	 number;
+		wmiss	 number;
+	begin
+		select sum(gets),sum(misses)
+		into   wget,wmiss
+		from   v$latch;
+		/* */
+		lat_perc := (1-(wmiss/wget))*100;
+		return lat_perc;
+	end latch;
+	/* Função que calcula a utilização dos redo logs */
+	function lb return number is
+		lb_perc number;
+		wrlsr	number;
+		wre	number;
+	begin
+		select value
+		into   wrlsr
+		from   v$sysstat
+		where  name = 'redo log space requests';
+		/* */
+		select value
+		into   wre
+		from   v$sysstat
+		where  name = 'redo entries';
+		/* */
+		lb_perc := (1-(wrlsr/wre))*100;
+		return lb_perc;
+	end lb;
+        /* Função que calcula contenção de Redo Allocation Latch */
+	function ral return number is
+		ral_perc number;
+		wget	number;
+		wmis	number;
+	begin
+		select gets, misses
+                into wget, wmis
+                from v$latch l,
+                     v$latchname ln
+                where ln.name   = 'redo allocation'
+                  and ln.latch# = l.latch#;
+                /* */
+		ral_perc := (wmis/wget)*100;
+		return ral_perc;
+	end ral;
+        /* Função que calcula contenção de Redo Copy Latch */
+	function rcl return number is
+		rcl_perc number;
+		wget	number;
+		wmis	number;
+	begin
+		select gets, misses
+                into wget, wmis
+                from v$latch l,
+                     v$latchname ln
+                where ln.name   = 'redo copy'
+                  and ln.latch# = l.latch#;
+                /* */
+                if wget <= 0 then
+                   rcl_perc := 0;
+                else
+         	   rcl_perc := (wmis/wget)*100;
+                end if;
+		return rcl_perc;
+	end rcl;
+	/* Função que calcula a utilização da área de sort */
+	function sort return number is
+		sort_perc	number;
+		wsm		number;
+		wsd		number;
+	begin
+		select value
+		into   wsm
+		from   v$sysstat
+		where  name = 'sorts (memory)';
+		/* */
+		select value
+		into   wsd
+		from   v$sysstat
+		where  name = 'sorts (disk)';
+		/* */
+		sort_perc := (wsm/(wsm+wsd))*100;
+		return sort_perc;
+	end sort;
+	/* Função que calcula o número de utilização da área de sort */
+	function nsort return number is
+		wnsort		number := -1;
+	begin
+		select count(*)
+		into   wnsort
+		from   v$sort_usage;
+		/* */
+		return wnsort;
+	end nsort;
+	/* Função que calcula a area em disco consumida pelos sort ou global temporary tables */
+	function areasort return number is 
+                areasort number;
+                blocksize number;
+	begin
+                select value
+                into blocksize
+                from v$parameter
+                where name = 'db_block_size';
+                /* */
+		select sum(blocks)*blocksize
+		into   areasort
+		from   v$sort_usage;
+		/* */
+		return areasort;
+	end areasort;
+	/* Função que conta o número de usuários conectados */
+	function nusr return number is
+		wnusr number;
+	begin
+		select count(*)-1
+		into   wnusr
+		from   v$session
+		where  type = 'USER';
+		/* */
+		return wnusr;
+	end nusr;
+	/* Função que conta o número de usuários em lock */
+	function ulock return number is
+		wlock number;
+	begin
+		select count(*)
+		into wlock
+	   	from v$lock
+     		where block=1;
+		/* */
+		return wlock;
+	end ulock;
+	/* Função que conta o número de usuários JCIVEL usando o JW */
+--	function jw return number is
+--		wnusrjw number;
+--	begin
+--		select count(*)
+--		into   wnusrjw
+--		from   v$session
+--		where  machine = 'jdbcclient'
+--                  and  username = 'JCIVEL';
+--		/* */
+--		return wnusrjw;
+--	end jw;
+	/* Função que obtém o número de transações */
+	function tr return number is
+		wtr	number;
+	begin
+		select sum(value)
+		into   wtr
+		from   v$sysstat
+		where  name in ('user commits','user rollbacks');
+		/* */
+		return wtr;
+	end tr;
+	/* Função que calcula o número de transações por segundo */
+	function tps (pdata_coleta date,ptr number) return number is 
+ 		wtps	number;
+		wtr	number;
+		wns	number;
+		wntr	number;
+		winstancia varchar2(15);
+		wdata	date;
+	begin
+		winstancia := instancia;
+		begin
+		   select max(data_coleta)
+    		   into   wdata
+		   from   tabmonitperf
+		   where  instancia = winstancia;
+		   /* */
+		   select tr
+		   into   wtr
+		   from   tabmonitperf
+		   where  data_coleta = wdata
+		     and  instancia = winstancia
+                     and  rownum = 1;
+		   /* */
+		exception
+		   when no_data_found then
+			wdata := null;
+			wtr := null;
+		end;
+		if wdata is null then
+			wtps := 0;
+		else
+			wns := (pdata_coleta - wdata) * 86400;
+			wntr:= ptr - wtr;				
+			if wntr < 0 then
+		            wntr := 0;
+		        end if;
+		        if wns = 0 then
+		            wtps := 0;
+		        else
+		            wtps := trunc((wntr/wns),3);
+		        end if;
+		end if;
+		return wtps;
+	end tps;
+	/* Função que obtém o consumo de memoria do Banco de Dados */
+	function mem return number is
+		wmem	number;
+	begin
+		select sum(ss.value)
+                into   wmem
+                from v$sesstat ss,
+                     v$statname sn
+                where sn.name in ('session uga memory','session pga memory')
+                  and sn.statistic# = ss.statistic#;
+		/* */
+		return wmem;
+	end mem;
+	/* Função que obtém o consumo de maximo memoria do Banco de Dados */
+	function maxmem return number is
+		wmaxmem	number;
+	begin
+		select sum(ss.value)
+                into   wmaxmem
+                from v$sesstat ss,
+                     v$statname sn
+                where sn.name in ('session uga memory max','session pga memory max')
+                  and sn.statistic# = ss.statistic#;
+		/* */
+		return wmaxmem;
+	end maxmem;
+	/* Função que obtém o consumo de CPU do Banco de Dados */
+	function cpu return number is
+		wcpu	number;
+	begin/
+
+		select value/100
+		into   wcpu
+		from   v$sysstat
+		where  name in ('CPU used by this session');
+		/* */
+		return wcpu;
+	end cpu;
+	/* Função que calcula o % de CPU do Banco de Dados */
+	function percpu (pdata_coleta date, pcpu number) return number is
+ 		wpercpu	number;
+		wcpu	number;
+		wns	number;
+		wccpu	number;
+		wncpu	number;
+		winstancia varchar2(15);
+		wdata	date;
+	begin
+		winstancia := instancia;
+		begin
+		   select value
+    		   into wncpu
+		   from v$parameter
+		   where name = 'cpu_count';
+		   /* */
+		   select max(data_coleta)
+    		   into   wdata
+		   from   tabmonitperf
+		   where  instancia = winstancia;
+		   /* */
+		   select cpu
+		   into   wcpu
+		   from   tabmonitperf
+		   where  data_coleta = wdata
+		     and  instancia = winstancia
+                     and  rownum = 1;
+		   /* */
+		exception
+		   when no_data_found then
+			wdata := null;
+			wpercpu := null;
+		end;
+		if wdata is null then
+			wpercpu := 0;
+		else
+			wns := (pdata_coleta - wdata) * 86400;
+			wccpu := pcpu - wcpu;				
+			if wccpu < 0 then
+		            wccpu := 0;
+		        end if;
+		        if wns = 0 then
+		            wpercpu := 0;
+		        else
+		            wpercpu := trunc(((wccpu/wns)/wncpu)*100,3);
+		        end if;
+		end if;
+                if wpercpu > 100 then
+                   wpercpu := 100;
+                end if;
+		return wpercpu;
+	end percpu;
+end MonitPerf;
+/
+
+/*
+declare
+  wjob number;
+begin
+   dbms_job.submit(job=>wjob,
+                   what=>'MonitPerf.Monit_SGA;',
+                   next_date=>round(sysdate,'HH24'),
+                   interval=>'sysdate+10/(60*24)');
+   commit;
+end;
+/
+declare
+  wjob number;
+begin
+   dbms_job.submit(job=>wjob,
+                   what=>'MonitPerf.Monit_IO;',
+                   next_date=>round(sysdate,'HH24'),
+                   interval=>'sysdate+1/24');
+   commit;
+end;
+/
+declare
+  wjob number;
+begin
+   dbms_job.submit(job=>wjob,
+                   what=>'MonitPerf.Monit_SQL;',
+                   next_date=>round(sysdate,'HH24'),
+                   interval=>'sysdate+30/(60*24)');
+   commit;
+end;
+/
+*/

@@ -1,0 +1,15 @@
+Monitoração de Locks Bloqueando Sessões:
+
+b_locks.sh     - Monitora tbs da base especificada.
+b_locks_all.sh - Monitora tbs de todas as bases, chamando a anterior.
+
+O arquivo ".oraps" contém a senha do system e deve estar em $ORACLE_HOME/dbs.
+O arquivo "psinst" deve estar em $ORACLE_HOME/bin e ter permissão de execução.
+
+Crontab:
+
+# Monitor de locks bloqueando sessoes
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /oraprd05/dbascripts/b_locks_all.sh 1>/oraprd05/dbascripts/log/b_locks_all.ok 2>>/oraprd05/dbascripts/log/b_locks_all.err
+
+OBS.: Deve-se alterar o path na entrada da crontab (/oraprd05).
+      Verificar se há o dir. 'log' abaixo de 'dbascripts'.

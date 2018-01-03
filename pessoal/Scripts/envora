@@ -1,0 +1,172 @@
+#!/bin/ksh
+# envora - inicializa variaveis de ambiente para Oracle
+# usage: envora [<SID>]
+#
+# Localizacao: $HOME do usuario Oracle
+#
+# Intervencao                   Responsavel Data       Hora  Descricao
+# ----------------------------- ----------- ---------- ----- -----------------------------------------------------------------
+# Criacao                       Erick CB    05/06/2002
+# Alteracao                     Erick CB    26/06/2002
+# Alteracao                     Erick CB    24/07/2002
+# Alteracao                     Erick CB    26/07/2002       Diretorio de Backup da PCSPRD11
+# Alteracao                     Erick CB    29/07/2002       Diretorio de Backup da PCSPRD12
+# Alteracao                     Erick CB    29/07/2002       Diretorio de Backup da PCSPRD11
+# Alteracao                     Erick CB    30/07/2002       Inclusao da sr-sun-E4500-001 (Sun1)
+# Alteracao                     Erick CB    30/07/2002 12:50 Exclusao das Vveis PATH, SHLIB_PATH e LD_LIBRARY_PATH
+# Alteracao                     Erick CB    01/08/2002 11:48 Inclusao da pcsdev02
+# Alteracao                     Erick CB    27/08/2002 09:30 Inclusao do $HOME/.profile
+# Alteracao                     Erick CB    09/09/2002 18:18 Diretorio de Backup da BLLPRDDB
+# Alteracao                     Erick CB    10/09/2002 09:30 Retirada do $HOME/.profile
+# Alteracao                     Erick CB    13/09/2002 08:30 ReInclusao do $HOME/.profile
+# Alteracao                     Erick CB    23/01/2003 08:20 Inclusao do cmsprd01
+# Alteracao                     Erick CB    23/01/2003 08:30 Inclusao do cobprd01
+# Alteracao                     Erick CB    30/01/2003 07:45 Inclusao do CTM_DIR na Sun2
+# Alteracao                     Erick CB    05/02/2003 11:11 Inclusao do raidprd01
+# Alteracao                     Erick CB    25/02/2003 14:20 Inclusao da variavel EMAIL_OIDBA
+# Alteracao                     Erick CB    11/03/2003 09:40 Inclusao da variavel SMS_OIDBA
+# Alteracao                     Erick CB    24/04/2003 10:30 Inclusao do servidor cfmsprd02
+#
+# Parametros
+# 1 = SID (opcional)
+
+if [ $# -gt 0 ]
+then
+
+  . $HOME/.profile
+
+  ORACLE_SID=$1
+  export ORACLE_SID
+
+  ORAENV_ASK=NO
+  . oraenv
+  ORAENV_ASK=
+
+  NLS_LANG=AMERICAN_AMERICA.WE8ISO8859P1
+  export NLS_LANG
+
+  TNS_ADMIN=$ORACLE_HOME/network/admin
+  export TNS_ADMIN
+
+  ORA_NLS32=$ORACLE_HOME/ocommon/nls/admin/data
+  export ORA_NLS32
+
+fi
+
+HOSTNAME=`hostname`
+export HOSTNAME
+
+# ORATAB, BKP_DIR e MON_DIR baseado no HostName
+case $HOSTNAME in
+  cfmsprd.rj.telemar) ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/backup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  cfmsprd02)          ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/backup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  crmprd11)           ORATAB=/var/opt/oracle/orataboi;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/crmprddb01/scripts;;
+  crmprddb01)         ORATAB=/var/opt/oracle/orataboi;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/crmprddb01/scripts;;
+  kenprd05)           ORATAB=/var/opt/oracle/oratabarb;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/arbprd01/scripts;;
+  arbprd01)           ORATAB=/var/opt/oracle/oratabarb;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/arbprd01/scripts;;
+  kenprd07)           ORATAB=/var/opt/oracle/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  kenprd15)           ORATAB=/var/opt/oracle/oratabapp;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/arbprd02/scripts;;
+  arbprd02)           ORATAB=/var/opt/oracle/oratabapp;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/arbprd02/scripts;;
+  pcsprd01)           ORATAB=/etc/orataba;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/bmppkga/scripts;;
+  bmppkga)            ORATAB=/etc/orataba;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/bmppkga/scripts;;
+  pcsprd02)           ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  pcsprd03)           ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  pcsprd11)           ORATAB=/etc/oratabb;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/bmppkgb/scripts;;
+  bmppkgb)            ORATAB=/etc/oratabb;
+                      BKP_DIR=/usr/backup/scripts;
+                      MON_DIR=/usr/monitor/bmppkgb/scripts;;
+  pcsdev01)           ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  pcsdev02)           ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  pcsprd12)           ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  ppgprd01)           ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/backup/scripts;
+                      MON_DIR=/usr/monitor/bllprddb/scripts;;
+  bllprddb)           ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/backup/scripts;
+                      MON_DIR=/usr/monitor/bllprddb/scripts;;
+  sc-sun-v880-001)    ORATAB=/var/opt/oracle/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  vitprd11)           ORATAB=/var/opt/oracle/orataboi;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/vitprdbw01/scripts;;
+  vitprdbw01)         ORATAB=/var/opt/oracle/orataboi;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/vitprdbw01/scripts;;
+  pcpprd01)           ORATAB=/var/opt/oracle/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  pcpprd01)           ORATAB=/var/opt/oracle/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  sr-sun-E4500-001)   ORATAB=/var/opt/oracle/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  sr-sun-E4500-002)   ORATAB=/var/opt/oracle/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      CTM_DIR=/u01/home/oracle/dbascripts/ctm
+                      MON_DIR=/usr/monitor/scripts;;
+  pcsdev03)           ORATAB=/etc/oratab;
+                      BKP_DIR=/usr/backup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  cmsprd01)           ORATAB=/var/opt/oracle/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  cobprd01)           ORATAB=/var/opt/oracle/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+  raidprd01)          ORATAB=/var/opt/oracle/oratab;
+                      BKP_DIR=/usr/oibackup/scripts;
+                      MON_DIR=/usr/monitor/scripts;;
+esac
+
+export ORATAB
+export BKP_DIR
+export CTM_DIR
+export MON_DIR
+
+export MONITOR_DIR=$MON_DIR
+export EMAIL_OIDBA=oidba@telemar.com.br
+export SMS_OIDBA='2188141883'
+export TMPDIR=/tmp
+
+# Data no Formata YYYYMMDD
+export DATA=`date "+%Y%m%d"`
+# Hora no Formato HHMM
+export HORA=`date "+%H%M"`
+# Data e Hora no Formato concatenado dos dois acima
+export DATAHORA=${DATA}_${HORA}

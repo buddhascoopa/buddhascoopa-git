@@ -1,0 +1,1225 @@
+>----------------------------------------------------------------
+>-
+>- Oracle8 Tuning ISBN 0-07-882390-0 (c) Oracle Press 1998
+>-
+>- Mike Corey, Dan Dechichio, Ian Abramson and myself are pleased
+>- to provide the code from Oracle8 Tuning for your use and
+>- enjoyment. Please note this material is for use only by
+>- consenting adults, and is not to be used where prohibited by
+>- law.
+>-
+>- Michael Abbey
+>-
+>- Mike Corey     Wellesley MA USA     mcorey@dbtinc.com
+>- Michael Abbey  Ottawa    ON Canada  masint@istar.ca
+>- Dan Dechichio  Boston    MA USA     d_dechichio@compuserve.com
+>- Ian Abramson   Toronto   ON Canada  ias@magi.com
+>-
+>----------------------------------------------------------------
+>
+>create database PROD
+>     logfile group 1
+>            ('p:\oradbf\redo1a.dbf', 'q:\oradbf\redo1b.dbf') size 10MB,
+>     logfile group 2
+>            ('q:\oradbf\redo2a.dbf', 'r:\oradbf\redo2b.dbf') size 10MB,
+>     logfile group 3
+>            ('r:\oradbf\redo3a.dbf', 'p:\oradbf\redo3b.dbf') size 10MB
+>     datafile 't:\oradbf\systemprod1.dbf' size 50MB
+>     maxdatafiles 255;
+>
+>create tablespace rollback_segs
+>datafile 's:\oradbf\rollprod1.dbf' size 100MB
+>default storage (initial 500K next 500K pctincrease 0);
+>
+>create tablespace users
+>datafile 'f:\oradbf\userprod1.dbf' size 50MB
+>default storage (initial 10K next 10K pctincrease 0);
+>
+>/*
+------------------------------------------------------------------------
+-
+>*/
+>/* This program assumes you are logged in as the     */
+>/* owner of the tables with triggers associated with     */
+>/* them. This is important, since DBA privileged         */
+>/* users may experience problems compiling other    */
+>/* user's code.                                      */
+>/* ------------------------------------------------- */
+>set pages 0 feed off echo off trimsp on
+>spool trgcomp.sql
+>prompt spool trgcomp
+>prompt set echo on feed on
+>select 'alter trigger '||trigger_name||' compile;'
+>  from user_triggers;
+>prompt spool off
+>spool off
+>
+>/* --------------------------------------------- */
+>/* Using the USER_SOURCE view, create a script   */
+>/* to recompile all procedures, functions, and   */
+>/* packages. Notice we exclude the TYPE of       */
+>/* PACKAGE BODY since compiling a PACKAGE also   */
+>/* compiles its BODY at the same time.           */
+>/* --------------------------------------------- */
+>set pages 0 feed off echo off
+>spool ppfcomp.sql
+>prompt spool ppfcomp
+>prompt set echo on feed on
+>select distinct 'alter '||type||' '||name||' compile;'
+>  from user_source
+> where type <> 'PACKAGE BODY';
+>prompt spool off
+>spool off
+>
+>/* ------------------------------------------------- */
+>/* This program assumes you have been granted access */
+>/* to the DBA_SYNONYMS view owned by Oracle user SYS */
+>/* and that you have write access to the current     */
+>/* directory.                                        */
+>/* ------------------------------------------------- */
+>set echo off pages 0 feed off
+>spool remotes.sql
+>select 'select * from dual@'||db_link||
+>  from sys.dba_db_links
+> where owner = 'PUBLIC';
+>spool off
+>set echo on
+>spool remotes
+>
+>select sum(pins) "Pins", sum(reloads) "Reloads",
+>        sum(reloads)/(sum(pins)+sum(reloads))*100
+>        "Percentage"
+>  om v$librarycache;
+>
+>col "Percentage miss" format 990.00
+>col "Gets" format 999,999,990
+>col "Misses" format 999,999,990
+>select unique parameter "Cache entry",
+>          gets "Gets",               /*Read from memory*/
+>          getmisses "Misses",        /*read from disk*/
+>          getmisses/(gets+getmisses)*100 "Percentage miss"
+>    from v$rowcache
+>  here gets+getmisses <> 0;
+>
+>select substr(name,1,20) "Latch",
+>        sum(gets) "WTW Gets",
+>        sum(misses) "WTW Misses",
+>        sum(immediate_gets)  "IMM Gets",
+>        sum(immediate_misses)  "IMM Misses"
+>  from v$latch where name like 'redo%'
+>  group by name;
+>
+>select name,value
+>  from v$sysstat
+>  where name like '%sort%';
+>
+>create profile finusers limit
+>     cpu_per_session       20
+>     sessions_per_user      1
+>     idle_time             30;
+>
+>create profile humanres limit
+>     cpu_per_session       20
+>     idle_time              8;
+>
+>-- Create a role that has the right to look at the V$ and DBA views
+>create role vddba;
+>set echo off pagesize 0 feedback off linesize 200 trimspool on
+>spool vddba.sql
+>select 'grant select on '||view_name||' to vddba;' -- *****
+>  from user_views
+> where view_name like 'V%'
+>    or view_name like 'DBA%';
+>spool off
+>set echo on feed on
+>spool vddba
+>start vddba
+>spool off
+>
+>create table toc_jind
+>  (toc_id number,
+>   toc_locator varchar2(2),
+>   toc_component varchar2(10),
+>   toc_desc varchar2(600),
+>  constraint toc_jind_pk primary key (toc_id))
+>  organization index tablespace fm_iot
+>  pctthreshold 20
+>  overflow tablespace ov_fm_iot;
+>
+>create tablespace nt_prd_data datafile
+>     'c:\orant\database\ntpd_1.dbf' size 200m,
+>     'd:\orant\database\ntpd_2.dbf' size 200m,
+>     'e:\orant\database\ntpd_3.dbf' size 200m,
+>     'h:\orant\database\ntpd_4.dbf' size 200m;
+>  default storage (initial 20m next 20m pctincrease 0);
+>
+>alter table address allocate extent
+>      (size 199m datafile 'C:\ORANT\DATABASE\NTPD_1.DBF');
+>alter table address allocate extent
+>      (size 199m datafile 'D:\ORANT\DATABASE\NTPD_2.DBF');
+>alter table address allocate extent
+>      (size 199m datafile 'H:\ORANT\DATABASE\NTPD_4.DBF');
+>
+>-- Make a copy of the chained rows in a holding table
+>create table add_chained as
+>     select *
+>       from address
+>      where rowid in
+>            (select head_rowid
+>               from chained_rows
+>              where table_name = 'ADDRESS');
+>-- Delete chained rows from ADDRESS
+>delete address
+>     where rowid in
+>          (select head_rowid
+>             from chained_rows
+>            where table_name = 'ADDRESS');
+>-- Move rows back in to ADDRESS
+>insert into address
+>      select * from add_chained;
+>-- Drop the intermediate table
+>drop table add_chained;
+>
+>select name, phyrds, phywrts
+>      from v$datafile a, v$filestat b   -- Join will get the name
+>     where a.file# = b.file#;
+>
+>set pages 0 ver off feed off echo off term off
+>spool sch_audit.sql
+>select 'audit select on blairr.'||table_name||' by access;'
+>      from sys.dba_tables
+>     where owner = 'BLAIRR';
+>spool off
+>start sch_audit
+>
+>create table audit_summary (
+>      owner                  varchar2(30),
+>      obj_name               varchar2(30),
+>      cal_day                date
+>      c_access               number);
+>
+>-- Only copy rows from yesterday ... any earlier data will have been
+>-- deleted yesterday by SQL statement after the insert.
+>insert into audit_summary
+>      select owner, obj_name, trunc(timestamp), count(*)
+>         from sys.dba_audit_object
+>        where trunc(timestamp) < trunc(sysdate-1)
+>        group by owner, obj_name, trunc(timestamp);
+>-- Delete yesterday's data.
+>delete sys.aud$
+>     where trunc(timestamp) < trunc(sysdate);
+>
+>select owner, obj_name, cal_day, c_access
+>      from audit_summary
+>     order by cal_day;
+>
+>select owner, obj_name, count(*)
+>      from audit_summary
+>     group by owner, obj_name
+>     order by 3 desc;
+>
+>rem * Index extract statement program
+>rem * MASI Inc.  August 1999
+>rem
+>rem  By specifying rows=n, export extracts no data, just the SQL
+statements
+>rem  required to recreate all aspects of the table's characteristics.
+>exp80 userid=add_owner/abc123 tables=address rows=n file=addr_nr
+>rem  With the export complete, we now read the dump file and put the
+index
+>rem  creation statements in an SQL file to be run in SQL*Plus.
+>imp80 userid=add_owner/abc123 file=addr_nr full=y
+indexfile=addr_ind.sql
+>
+>create table doc_master (
+>       fy_code        varchar2(5),
+>       doc_num        number(7),
+>       doc_type       varchar2(2),
+>       budget_amt     number(10,2),
+>       precomm_amt    number(10,2),
+>       comm_amt       number(10,2),
+>       exp_amt        number(10,2))
+>partition by range (fy_code)
+>  (partition fy_9697 values less than ('9798')
+>             tablespace ts_9697,
+>   partition fy_9798 values less than ('9899')
+>             tablespace ts_9798);
+>
+>create table sales (
+>       sales_id          number,
+>       cust_id           number(6),
+>       other_col1        varchar2(20),
+>       other_col2        varchar2(20),
+>       other_col3        varchar2(20),
+>       other_col4        varchar2(20),
+>       other_col5        varchar2(20),
+>       od_flag           varchar2(1))
+>      storage (initial 240m next 240m pctincrease 0)
+>      partition by range (cust_id)
+>        (partition part1 values less than (299999) tablespace sales_p1,
+>         partition part2 values less than (699999) tablespace sales_p2,
+>         partition part3 values less than (899999) tablespace sales_p3,
+>         partition part4 values less than (999999) tablespace
+sales_p4);
+>
+>create tablespace sales_p1 datafile 'd:\orant\database\sales_p1.dbf'
+>           size 60m reuse autoextend on next 60m maxsize 500m
+>           default storage (initial 60m next 60m pctincrease 0);
+>create tablespace sales_p2 datafile 'f:\orant\database\sales_p2.dbf'
+>           size 60m reuse autoextend on next 60m maxsize 500m
+>           default storage (initial 60m next 60m pctincrease 0);
+>create tablespace sales_p3 datafile 'h:\orant\database\sales_p3.dbf'
+>           size 60m reuse autoextend on next 60m maxsize 500m
+>           default storage (initial 60m next 60m pctincrease 0);
+>create tablespace sales_p4 datafile 'o:\orant\database\sales_p4.dbf'
+>           size 60m reuse autoextend on next 60m maxsize 500m
+>           default storage (initial 60m next 60m pctincrease 0);
+>
+>create tablespace cust_p1
+>     datafile 'e:\orant\database\cust_p1.dbf' size 60m
+>     default storage (initial 40m next 40m pctincrease 0);
+>create tablespace cust_p2
+>     datafile 'h:\orant\database\cust_p2.dbf' size 60m
+>     default storage (initial 40m next 40m pctincrease 0);
+>create tablespace cust_p3
+>     datafile 'j:\orant\database\cust_p3.dbf' size 60m
+>     default storage (initial 40m next 40m pctincrease 0);
+>
+>alter table purchase split partition cust_p2 at (555555,1997,44)
+>    into (partition cust_p1a,
+>          partition cust_p1b);
+>
+>create index purchase_1 on purchase (cust_num) global
+>    partition by range (cust_num)
+>       (partition values less than (555555)
+>                  tablespace cust_ip1,
+>        partition values less than (555557)
+>                  tablespace cust_ip2,
+>        partition values less than (maxvalue)
+>                  tablespace cust_ip3);
+>
+>-- All this is already in place supporting partition views.
+>-- Create the tables to be part of the partition view.
+>create table purchase_lt555 (
+>         po_num     number,
+>         cust_num   number) tablespace purchase_low;
+>create table purchase_gte555 (
+>         po_num     number,
+>         cust_num   number) tablespace purchase_high;
+>-- Create rows in these 2 tables. Those whose PO_NUM < 555 are
+>-- in PURCHASE_LT555, the others in PURCHASE_GTE555.
+>insert into purchase_lt555 values (323,15);
+>insert into purchase_lt555 values (324,25);
+>insert into purchase_lt555 values (325,35);
+>insert into purchase_lt555 values (221,45);
+>insert into purchase_lt555 values (245,55);
+>insert into purchase_gte555 values (623,65);
+>insert into purchase_gte555 values (724,75);
+>insert into purchase_gte555 values (825,85);
+>insert into purchase_gte555 values (821,95);
+>insert into purchase_gte555 values (945,35);
+>-- Create the partition view.
+>create or replace view purchase_pv as
+>      select * from purchase_lt555
+>    union all
+>      select * from purchase_gte555;
+>-- Define the partitioned table.
+>drop table purchase;
+>create table purchase (
+>         po_num     number,
+>         cust_num   number)
+>    partition by range (po_num)
+>        (partition pur_1 values less than (555)
+>                           tablespace purchase_low,
+>         partition pur_2 values less than (maxvalue)
+>                           tablespace purchase_high);
+>-- Let's do the exchange.
+>alter table purchase exchange partition pur_1
+>           with table purchase_lt555;
+>alter table purchase exchange partition pur_2
+>           with table purchase_gte555;
+>-- Let's look at the outcome.
+>select *
+>      from purchase partition (pur_1);
+>
+>select *
+>  from individual
+> where lastname like 'KERZNER%'
+>   and office_id is not null
+>   and office_id not in
+>      (select /*+ hash_aj */ office
+>         from national_office
+>        where office_id is not null
+>          and role = 'SENATORS');
+>
+>create table individual (
+>      firstname          varchar2(20) not null,
+>      lastname           varchar2(30) not null,
+>      birthdate          date         not null,
+>      gender             varchar2(1)  not null,
+>      initial            varchar2(1),
+>      favorite_beatle    varchar2(6))
+>    parallel (degree 4);
+>
+>-- This statement will be parallelized looking for a pool of 4 parallel
+>-- query server processes.
+>select col1, col2, col3 /*+ parallel (tab1,4) */ ...
+>-- This will not be since the word is misspeledd.
+>select col1, col2, col3 /*+ paralell (tab1,4) */ ...
+>-- As will this one, since there is an extra space between the leading
+>-- asterisk and the + sign, thereby violating a stipulation for writing
+>-- hints
+>select col1, col2, col3 /* + parallel (tab1,4) */ ...
+>
+>create table contributions_1997 /*+ parallel (contributions_1997,10) */
+>            as
+>     select indivual_id,sum(income_tax_withholding),
+>            sum(pension_withholding) /*+ parallel (weekly_details,5) */
+>       from weekly_details
+>      where fiscal_year = 1997
+>      group by individual;
+>
+>insert into children_detail /*+ parallel (children_detail, 4) */
+>      select firstname, lastname, birthdate,
+>             gender, sum(annual_income) /*+ parallel (individual, 6) */
+>       from individual
+>      where type = 'KID'
+>      group by firstname, lastname, birthdate, gender;
+>
+>create index idx_1997_sales_product
+>      on 1997_sales (product_id)
+>      nosort
+>      nologging
+>      parallel (degree 5);
+>
+>alter index idx_1997_sales_product rebuild
+>          nologging parallel (degree 5);
+>
+>select a.sid, b.name,a.value from v$sesstat a, v$statname b
+>   where a.statistic# in (15,16)
+>   and a.statistic# = b.statistic#
+>   order by 1,3;
+>
+>select decode(state,0,'Free',
+>                    1,'Read and Modified',
+>                    2,'Read and Not Modified',
+>                    3,'Currently Being Read', 'Other'), Count(*)
+>  from x$bh
+> group by decode(state,0,'Free',
+>                       1,'Read and Modified',
+>                       2,'Read and Not Modified',
+>                       3,'Currently Being Read', 'Other');
+>
+>/* -------------------------------------------------------- */
+>/*  objects.sql                                             */
+>/*                                                          */
+>/*  Display partial contents of 4 USER_ series of views     */
+>/*  for comparison between before and after rebuild.        */
+>/*                                                          */
+>/*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson  */
+>/* -------------------------------------------------------- */
+>def sowner="&1"
+>def timer="&2"
+>set echo off feed off pages 0 ver off lines 1000 trimsp on
+>-- Spool file ends up with name of second parameter (i.e.,
+>-- Before.lst or After.1st.
+>spool &2
+>prompt ===== &timer =====
+>prompt
+>select table_name
+>  from sys.dba_tables
+> where owner = upper('&&sowner');
+>select view_name
+>  from sys.dba_views
+> where owner = upper('&&sowner');
+>select table_name,index_name
+>  from sys.dba_indexes
+> where owner = upper('&&sowner');
+>select index_name,column_position,column_name
+>  from sys.dba_ind_columns
+> where index_owner = upper('&&sowner')
+> order by index_name,column_position;
+>prompt
+>spool off
+>exit
+>
+>create database newtest
+>       controlfile reuse
+>       datafile 'f:\orant\database\sys1orcl.ora' autoextend on,
+>                'g:\orant\database\sys2orcl.ora' autoextend on
+>                     next 10m maxsize unlimited
+>       logfile group 1 ('diskb:log1.log', 'diskc:log1.log') size 50k,
+>               group 2 ('diskb:log2.log', 'diskc:log2.log') size 50k
+>       maxlogfiles 5
+>       maxloghistory 100
+>       maxdatafiles 10
+>       maxinstances 2
+>       exclusive
+>       character set we8dec
+>       national character set ja16sjisfixed
+>       noarchivelog
+>       maxlogmembers 4;
+>
+>create database devel
+>      datafile 'd:\orant\database\sysdev1.dbs'        size 20M
+>      logfile group 1 ('c:\orant\redo\dev_log1a.log',
+>                       'd:\orant\redo\dev_log1b.log') size 2M,
+>              group 2 ('d:\orant\redo\dev_log2a.log',
+>                       'c:\orant\redo\dev_log2b.log') size 2M
+>         maxdatafiles 40
+>         character set we8iso8859p1;
+>
+>select namespace, gets, gethits, gethitratio, pins,
+>           pinhits, pinhitratio
+>      from v$librarycache;
+>
+>select sum(pins) Hits, sum(reloads) Misses,
+>           sum(pins)/(sum(pins)+sum(reloads)) HitRatio
+>      from v$librarycache;
+>
+>/* --------------------------------------------------------- */
+>/*  statgath.sql                                             */
+>/*  Analyze all tables and indexes in the database           */
+>/* --------------------------------------------------------- */
+>set pagesize 0 feedback off trimspool on linesize 999 echo off
+>spool ana_db.sql
+>prompt
+>prompt spool ana_db
+>prompt
+>prompt set echo on feedback on
+>select 'analyze index '||owner||'.'||index_name||
+>       ' compute statistics;'
+>  from sys.dba_indexes
+> where owner not in ('SYS','SYSTEM');
+>select 'analyze table '||owner||'.'||table_name||
+>       ' estimate statistics sample 20 percent;'
+>  from sys.dba_tables
+> where owner not in ('SYS','SYSTEM');
+>prompt
+>prompt spool off
+>spool off
+>
+>select substr(file_name,1,10) "Device",
+>       sum(phyrds) "Reads",
+>       sum(phywrts) "Writes"
+>  from sys.v_$filestat a, sys.dba_data_files b
+> where a.file# = b.file_id
+> group by substr(file_name,1,10)
+> order by 1;
+>
+>select 'dbverf80 '||file_name
+>      from sys.dba_data_files;
+>
+>select 'copy '||file_name||' d:\prodbkp\copy'
+>      from sys.dba_data_files
+>    union
+>    select 'copy '||member||' d:\prodbkp\copy'
+>      from v$logfile;
+>
+>set serveroutput on size 1000000
+>set echo on
+>begin
+>  declare
+>    cursor get_data is
+>      select rowid
+>        from finance
+>       where rownum < 41;
+>    rid    rowid;
+>    p2     number;
+>    p3     number;
+>    p4     number;
+>    p5     number;
+>    p6     number;
+>  begin
+>    open get_data;
+>    fetch get_data into rid;
+>    while get_data%found loop
+>       dbms_rowid.rowid_info (rid,p2,p3,p4,p5,p6);
+>       dbms_output.put_line ('ROWID is '||
+>                              lpad(p5,4,0)||'.'||
+>                              lpad(p6,4,0)||'.'||
+>                              lpad(p4,4,0));
+>       fetch get_data into rid;
+>    end loop;
+>  end;
+>end;
+>/
+>
+>create or replace function extoreg (rid in rowid) return varchar2 is
+>    p2 number;
+>    p3 number;
+>    p4 number;
+>    p5 number;
+>    p6 number;
+>    begin
+>      dbms_rowid.rowid_info (rid,p2,p3,p4,p5,p6);
+>      return lpad(p5,4,0)||'.'||lpad(p6,4,0)||'.'||lpad(p4,4,0);
+>   end;
+>/
+>
+>select tablespace_name,sum(bytes) from sys.dba_free_space
+>    group by tablespace_name;
+>select tablespace_name,max(bytes) from sys.dba_free_space
+>    group by tablespace_name;
+>
+>/* -------------------------------------------------------- */
+>/*  fspace.sql                                              */
+>/*                                                          */
+>/*  Create rows in FSPACE for FREE_SPACE in the database.   */
+>/*                                                          */
+>/*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson  */
+>/* -------------------------------------------------------- */
+>rem *  Create rows in FSPACE for today
+>insert into fspace
+>select a.tablespace_name,
+>       sum(a.bytes),         /*  Allocated from DBA_DATA_FILES  */
+>       round(sum(b.bytes)),  /*  Free bytes from DBA_FREE_SPACE */
+>       '','',sysdate
+>  from sys.dba_data_files a,sys.dba_free_space b
+> where a.tablespace_name = b.tablespace_name
+> group by a.tablespace_name,'','',sysdate;
+>rem *  Yesterday's free space is in the rows from yesterday's
+>rem *  FREE_TODAY column.  The FREE_TODAY column values from
+>rem *  yesterday are moved into the FREE_YESTERDAY columns for
+>REM *  today's rows.
+>update fspace a
+>set free_yesterday =
+>    (select free_today
+>       from fspace b
+>      where a.tablespace_name = b.tablespace_name
+>        and to_char(b.system_date) = to_char(sysdate - 1))
+>where to_char(system_date) = to_char(sysdate);
+>rem *  The PERCENT_CHANGED is set to represent the following:
+>rem *  % change = free_today - free_yesterday / free_yesterday
+>rem *  expressed as a percentage.  The calculation has to use a
+>rem *  DECODE in case the amout of free space has not changed.
+>rem *  This avoids dividing by 0.
+>update fspace
+>   set percent_changed =round(decode(free_today-free_yesterday,
+>           0,0,  /* If no change, set PERCENT_CHANGED to zero  */
+>           100*(free_today-free_yesterday)/
+>           (free_yesterday)),2)
+> where to_char(system_date) = to_char(sysdate);
+>rem *  Print changed free space report for today.
+>col tablespace_name heading 'Tablespace'
+>col allocated heading 'Allocated' 999,999,990
+>col free_today heading 'Free today' form 999,999,990
+>col free_yesterday heading 'Yesterday form 999,999,990
+>col percent_changed heading 'Pct Ch' form 90.00
+>select tablespace_name, allocated, free_today, free_yesterday,
+
+
+>       percent_changed
+>  from fspace
+> where to_char(system_date) = to_char(sysdate);
+>
+>/* ----------------------------------------------------------- */
+>/*  sens_sth_select          Mark Kerzner 1997                 */
+>/*                           sensfan@sensfans.com              */
+>/*  Illustrate the use of UTL_FILE against an Oracle8          */
+>/*  database.                                                  */
+>/*                                                             */
+>/*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson     */
+>/* ----------------------------------------------------------- */
+>create or replace procedure sens_sth_select (i_section_number in
+number,
+>                                             i_year in number) is
+>  l_sth_file_handle    utl_file.file_type;
+>  -- Naturally, these could be set after the BEGIN, but it is much
+>  -- cuter to do it here. The value assigned to "l_sth_file_path" must
+>  -- be mentioned in the UTL_FILE_DIR entry in INIT.ORA unless the
+entry
+>  -- says UTL_FILE_DIR = * as explained elsewhere.
+>  l_sth_file_path      varchar2(20) default 'c:\orant\bin';
+>  l_sth_file_name      varchar2(20) default 'sth_list.dat';
+>  l_record_buffer      varchar2(163);
+>  cursor sth_cur is
+>    select accnt_num,lst_nme,frst_nme,cmpny_nme,addr_ln1,
+>           addr_ln2, city, prvnc, pstl_cde, club_stts
+>      from sth
+>     where sth.sctn = i_section_number
+>       and sth.yr = i_year;
+>  begin
+>    begin
+>      -- Open the file for write.
+>      l_sth_file_handle := utl_file.fopen (l_sth_file_path,
+l_sth_file_name,
+>'w');
+>      for sth_rec in sth_cur loop
+>        if sth_rec.club_stts = 'GOLD' then
+>           -- Build the output line (fixed length fields).
+>           l_record_buffer :=
+>                 lpad(sth_rec.accnt_num,10,0)||
+>                 rpad(nvl(sth_rec.lst_nme,' '),20,' ')||
+>                 rpad(nvl(sth_rec.frst_nme,' '),10,' ')||
+>                 rpad(nvl(sth_rec.cmpny_nme,' '),40,' ')||
+>                 rpad(sth_rec.addr_ln1,30,' ')||
+>                 rpad(nvl(sth_rec.addr_ln2,' '),30,' ')||
+>                 rpad(sth_rec.city,15,' ')||
+>                 sth_rec.prvnc||
+>                 rpad(nvl(sth_rec.pstl_cde,' '),6,' ');
+>           utl_file.put_line (l_sth_file_handle, l_record_buffer);
+>        end if;
+>      end loop;
+>      exception
+>        -- Trap and deal with exceptions. We highly recommend doing
+this
+>        -- yourself to avoid aborted procedures with very little
+information
+>        -- that's useful to the end user or the help desk.
+>        when utl_file.internal_error then
+>       -- LOG_ERR is another procedure that writes error text to
+>        -- an error file or a table from which errors will be dumped.
+>             log_err ('A',SQLCODE,'Internal Error with utl_file
+package');
+>        when utl_file.invalid_filehandle then
+>             log_err ('A',SQLCODE,'An Invalid filehandle was
+declared');
+>        when utl_file.invalid_mode then
+>             log_err ('A',SQLCODE,'Invalid mode error with utl_file
+>package');
+>        when utl_file.invalid_operation then
+>             log_err ('A',SQLCODE,'Invalid operation error with
+package');
+>        when utl_file.invalid_path then
+>             log_err ('A',SQLCODE,'An invalid path was specified '||
+>                      'for the output file');
+>        when utl_file.write_error THEN
+>             log_err ('A',SQLCODE,'An error occurred while attempting
+'||
+>                      'to write to the output file');
+>        when others then
+>             log_err ('A',SQLCODE,NULL);
+>  end;
+>  utl_file.fclose (l_sth_file_handle);
+>end;
+>/
+>
+>SQL> desc hot_data
+> Name                            Null?    Type
+>------------------------------- -------- ----
+> CYCLE                                    NUMBER(1)
+> TABLESPACE_NAME                          VARCHAR2(30)
+> FILE_NAME                                VARCHAR2(100)
+> BYTES                                    NUMBER
+>SQL> desc hot_write
+> Name                            Null?    Type
+>------------------------------- -------- ----
+> CTR                                      NUMBER
+> TEXT                                     VARCHAR2(100)
+>
+>/* -------------------------------------------------------- */
+>/*  hot_data.sql                                            */
+>/*                                                          */
+>/*  Create rows in HOT_DATA with tablespace and data file   */
+>/*  information.                                            */
+>/*                                                          */
+>/*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson  */
+>/* -------------------------------------------------------- */
+>set echo on term off pages 0 feed off
+>set serveroutput on size 1000000
+>begin
+>  declare
+>    high_end        number := 5368709120;
+>    accum           number;
+>    cycle           number := 1;
+>    file_row        sys.dba_data_files%rowtype;
+>    -- Get all the information about tablespaces and datafiles
+>    cursor get_data is
+>      select *
+>        from sys.dba_data_files
+>       order by tablespace_name,file_name;
+>  begin
+>    delete hot_data;
+>    commit;
+>    accum := 0;
+>    -- Loop through the information in DBA_DATA_FILES, inserting rows
+>    -- into HOT_DATA. When the ACCUM variable is larger than HIGH_END,
+the
+>    -- cycle is incremented and we carry on into the next cycle.
+>    for file_row in get_data loop
+>      accum := accum+file_row.bytes;
+>      if accum > high_end then
+>         cycle := cycle+1;
+>         accum := 0;
+>      end if;
+>      -- Put the cycle number, tablespace name, file name, and file
+size in
+>      -- HOT_DATA.
+>      insert into hot_data values
+>             (cycle,file_row.tablespace_name,
+>              file_row.file_name,file_row.bytes);
+>    end loop;
+>  end;
+>end;
+>/
+>
+>/* -------------------------------------------------------- */
+>/*  hot_write.sql                                           */
+>/*                                                          */
+>/*  Create rows in HOT_WRITE using the information in       */
+>/*  HOT_DATA. We use the HOT_WRITE table simply to format   */
+>/*  and dump rows as the backup script is created.          */
+>/*                                                          */
+>/*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson  */
+>/* -------------------------------------------------------- */
+>
+>truncate table hot_write;
+>begin
+>  declare
+>    t_bytes           number := 0;    -- Keeps track of tablespace
+bytes
+>    f_bytes           number := 0;    -- Keeps track of datafile bytes
+>    ctr               number := 0;
+>    ts_name           varchar2(30);
+>    f_name            varchar2(100);
+>    l_cycle           number := 1;
+>    cursor get_files is
+>      select file_name,bytes
+>        from hot_data
+>       where tablespace_name = ts_name;
+>    cursor get_ts is
+>      select distinct tablespace_name
+>        from hot_data
+>       where cycle = l_cycle;
+>  begin
+>    -- The next few lines place the UNIX RCS header information in the
+>    -- backup script. Each time we write to HOT_WRITE we increment a
+counter
+>    -- so we can get the rows back in order.
+>    ctr := ctr+1;
+>    insert into hot_write values (ctr,'#');
+>    ctr := ctr+1;
+>    insert into hot_write values (ctr,'# $Header$');
+>    ctr := ctr+1;
+>    insert into hot_write values (ctr,'#');
+>    ctr := ctr+1;
+>    insert into hot_write values (ctr,null);
+>    ctr := ctr+1;
+>    insert into hot_write values (ctr,'cd $HOME/backups');
+>    ctr := ctr+1;
+>    -- Write the line to place us in the correct directory.
+>    insert into hot_write values (ctr,'export
+ORACLE_HOME=/home/oracle');
+>    ctr := ctr+1;
+>    -- Set the ORACLE_SID properly.
+>    insert into hot_write values (ctr,'export ORACLE_SID=masii');
+>    ctr := ctr+1;
+>    insert into hot_write values (ctr,null);
+>    ctr := ctr+1;
+>    -- This line gets the last completed cycle number from the disk
+file
+>    -- mentioned in numbered point 3 at the top of this "Hot Backup
+Cycles"
+>    -- section.
+>    into hot_write values (ctr,'cycle=`cat hot_cycle`');
+>    ctr := ctr+1;
+>    insert into hot_write values (ctr,null);
+>    for i in 1..3 loop
+>      ctr := ctr+1;
+>      -- Build the start of the IF statement.
+>      insert into hot_write values (ctr,'if [ "$cycle" = '||
+>                                         l_cycle||' ]; then');
+>      ctr := ctr+1;
+>      insert into hot_write values (ctr,null);
+>      ctr := ctr+1;
+>      insert into hot_write values (ctr,'   #');
+>      ctr := ctr+1;
+>      insert into hot_write values (ctr,'   # Cycle '||l_cycle);
+>      ctr := ctr+1;
+>      insert into hot_write values (ctr,'   #');
+>      open get_ts;
+>      fetch get_ts into ts_name;
+>      while get_ts%found loop
+>        -- Outer loop gets the name of all the tablespaces.
+>        ctr := ctr+1;
+>        insert into hot_write values (ctr,null);
+>        ctr := ctr+1;
+>        -- The next line will place the desired tablespace in backup
+mode.
+>        insert into hot_write
+>               values (ctr,'   echo "alter tablespace '||ts_name||
+>                           ' begin backup;" | $ORACLE_HOME/bin/sqlplus
+/');
+>        open get_files;
+>        fetch get_files into f_name,f_bytes;
+>        while get_files%found loop
+>          -- Inner loop gets all the file names and sizes for the
+tablespace
+>          -- selected in the outer loop.
+>          ctr := ctr+1;
+>          -- Create the line that copies the datafile to the disk
+backup
+>          -- location.
+>          insert into hot_write values (ctr,'   cp '||f_name||'
+>/backups/hot');
+>          fetch get_files into f_name,f_bytes;
+>          t_bytes := t_bytes+f_bytes;
+>        end loop;
+>        ctr := ctr+1;
+>        -- The next line takes the desired tablespace out of backup
+mode.
+>        insert into hot_write
+>               values (ctr,'   echo "alter tablespace '||ts_name||
+>                           ' end backup;" | $ORACLE_HOME/bin/sqlplus
+/');
+>        close get_files;
+>        fetch get_ts into ts_name;
+>      end loop;
+>      ctr := ctr+1;
+>      insert into hot_write values (ctr,null);
+>      ctr := ctr+1;
+>      insert into hot_write values (ctr,'   #');
+>      ctr := ctr+1;
+>      -- This line simply writes out the size of the cycle just
+completed.
+>      insert into hot_write values (ctr,'   # Cycle size --- '||
+>
+to_char(t_bytes,'99,999,999,990'));
+>      t_bytes := 0;
+>      ctr := ctr+1;
+>      insert into hot_write values (ctr,'   #');
+>      ctr := ctr+1;
+>      -- Write the end of if statement for UNIX.
+>      insert into hot_write values (ctr,'fi');
+>      ctr := ctr+1;
+>      insert into hot_write values (ctr,null);
+>( Having just completed a cycle, go on to the next.
+>      l_cycle := l_cycle+1;
+>      close get_ts;
+>    end loop;
+>  end;
+>end;
+>/
+>spool off
+>set echo off
+>spool hot_backup.sh
+>select text
+>  from hot_write
+> order by ctr;
+>prompt if [ "$cycle" = 1 ]; then
+>select '   echo 2 > $HOME/backups/hot_cycle' from dual;
+>prompt elsif [ "$cycle" = 2 ]; then
+>select '   echo 3 > $HOME/backups/hot_cycle' from dual;
+>prompt else
+>select '   echo 1 > $HOME/backups/hot_cycle' from dual;
+>prompt fi
+>spool off
+>
+>select owner "Owner", segment_name "Segment Name",
+>           segment_type "Type", tablespace_name "Tablespace",
+>           extents "#Ext", max_extents "Max"
+>      from sys.dba_segments
+>     where extents > 5
+>       and owner not in ('SYS','SYSTEM')
+>     order by owner,segment_name;
+>
+>/* -------------------------------------------------------- */
+>/*  exinuse.sql                                             */
+>/*                                                          */
+>/*  Report on tables and indexes whose extent allocation is */
+>/*  within the specified maximum number allowed for the     */
+>/*  object.                                                 */
+>/*                                                          */
+>/*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson  */
+>/* -------------------------------------------------------- */
+>set pages 20 echo off ver off trimsp on
+>col eiu         form 999 head 'In Use'
+>col table_name  form a30 head 'Table name'
+>col index_name  form a30 head 'Index name'
+>col max_extents form 999 head 'MExtents'
+>repheader 'Tables within 2 extents of max allowed ...' skip 2
+>select table_name,max_extents, num_ext(table_name) eiu
+>      from user_tables
+>     where max_extents - num_ext(table_name) < 3;
+>repheader 'Indexes within 2 extents of max allowed ...' skip 2
+>select index_name,max_extents, num_ext(index_name) eiu
+>      from user_indexes
+>     where max_extents - num_ext(index_name) < 3;
+>
+>select *
+>      from sys.dba_free_space
+>     where tablespace_name = 'USERS7'
+>     order by block_id;
+>
+>set echo off pages 0 trimsp off feed off
+>spool coalesce
+>select 'alter tablespace '||tablespace_name||' coalesce;'
+>      from sys.dba_tablespaces
+>     where tablespace_name not in ('TEMP','ROLLBACK');
+>
+>select b.file_id "File #",
+>           b.tablespace_name "Tablespace name",
+>           b.bytes "# bytes",
+>           (b.bytes - sum(nvl(a.bytes,0))) "# used",
+>           sum(nvl(a.bytes,0)) "# free",
+>          (sum(nvl(a.bytes,0))/(b.bytes))*100 "%free"
+>      from sys.dba_free_space a, sys.dba_data_files b
+>     where a.file_id(+) = b.file_id
+>     group by b.tablespace_name, b.file_id, b.bytes
+>     order by b.tablespace_name;
+>
+>select username "Username", created "Created",
+>       substr(granted_role,1,15) "Roles",
+>       default_tablespace "Default TS",
+>       temporary_tablespace "Temporary TS"
+>  from sys.dba_users, sys.dba_role_privs
+> where username = grantee (+)
+> order by username;
+>
+>set echo off feed off pages 0
+>spool veedollar_dba.sql
+>select 'grant select on '||view_name||' to public;'
+>  from sys.dba_views
+> where view_name like 'V_$%'
+>    or view_name like 'DBA_%;
+>set echo on feed on
+>@veedollar_dba
+>
+>SQL> /* -------------------------------------------------------- */
+>SQL> /*  spsizing.sql                                            */
+>SQL> /*                                                          */
+>SQL> /*  Report on shared pool sizing for entered number of      */
+>SQL> /*  concurrent users using a user logged on as a sample of  */
+>SQL> /*  the amount of memory that will be used per session.     */
+>SQL> /*                                                          */
+>SQL> /*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson  */
+>SQL> /* -------------------------------------------------------- */
+>set echo off ver off feed off pages 0
+>
+>rem * You are prompted for the Oracle ID of someone currently
+>rem * logged on. That person's memory consumption will be used
+>rem * as a sample amount. You are also asked for the # of
+>rem * concurrent users to base this calculation on.
+>
+>accept username prompt 'User to use?? '
+>accept numusers prompt '# of users ?? '
+>
+>rem * Get that user's session identifier by joining v$process
+>rem * and v$session matching the ADDR column from v$process
+>rem * against the PADDR column from v$session, and matching
+>rem * the USERNAME column from v$session against the username
+>rem * entered before
+>set term off
+>col a new_value snum
+>select sid a
+>  from v$process p, v$session s
+> where p.addr = s.paddr
+>   and s.username = upper('&username');
+>
+>rem * Now that we have the sample user's session
+>rem * ID, we can go to v$sesstat for the amount of memory
+>rem * that user is consuming.  We use STATISTIC# = 16 which is
+>rem * the MAX SESSION MEMORY per user maintained in
+>rem * v$sesstat for each user connected to the database.
+>
+>col b new_value pumem
+>select value b
+>  from v$sesstat
+> where statistic# = 16
+>   and sid = &snum;
+>
+>rem * Get the amount of memory in the shared pool that is
+>rem * currently in use (i.e., the size of the SQL sitting in the
+>rem * shared pool).
+>col c new_value spl
+>select sum(sharable_mem) c
+>  from v$sqlarea;
+>rem * Using the following formula, make the optimal shared
+>rem * pool size calculation.
+>rem * optimal size = 1.3 * (per_user_memory * number _users +
+>                            size_of_sql_in_pool)
+>col d new_value size1
+>col e new_value size2
+>select (&pumem*&numusers+&spl) d,
+>       (&pumem*&numusers+&spl)+3/10*(&pumem*&numusers+&spl) e
+>  from dual;
+>
+>col pmem form 99,999,990
+>col nu   like pmem
+>col sss  like pmem
+>col tmu  like pmem
+>col s1   like pmem
+>col s2   like pmem
+>set term on
+>prompt
+>prompt
+>prompt
+>prompt ===================================================
+>select 'Per user memory requirement:  ', &pumem pmem
+>  from dual;
+>select 'Number of users            :  ', &numusers nu
+>  from dual;
+>prompt ===================================================
+>select 'Total memory for users     :  ', &numusers*&pumem tmu
+>  from dual;
+>select 'Size of stuff in shared SQL:  ', &spl sss
+>  from dual;
+>prompt ===================================================
+>select 'Base shared pool size      :  ', &size1 s1
+>  from dual;
+>select 'Pool size with 30% free    :  ', &size2 s2
+>  from dual;
+>prompt ===================================================
+>
+>select decode(state,0,'FREE',
+>                    1,'Read and Modified',
+>                    2,'Read and Non-Modified',
+>                    4,'Current Block Read','Other'),count(*)
+>  from x$bh
+> group by decode(state,0,'FREE',
+>                       1,'Read and Modified',
+>                       2,'Read and Non-Modified',
+>                       4,'Current Block Read','Other');
+>
+>set echo off pages 0 feed off trimsp on
+>spool nukeuser.sql
+>select 'drop '||object_type||' '||owner||'.'||object_name||';'
+>  from sys.dba_objects
+> where object_type in ('VIEW','SEQUENCE','SYNONYM')
+>   and owner = 'CHARROEL';
+>select 'drop ' ||object_type||' '||owner||'.'||object_name||
+>       'cascade constraints;'
+>  from sys.dba_objects
+> where object_type =  'TABLE'
+>   and owner = 'CHARROEL';
+>spool off
+>
+>spool ts_quotas.sql
+>select 'alter user quota ' || max_bytes || ' on ' || tablespace_name ||
+';'
+>  from sys.dba_ts_quotas
+> where nvl(max_bytes,0) > 0;
+>spool off
+>
+>set pages 0 feed off echo off
+>spool yr_trans.parfile
+>prompt userid=system/manager
+>prompt file=yr_trans
+>prompt buffer=10240000
+>prompt indexes=y
+>prompt grants=y
+>prompt owner=(
+>select unique owner || ','
+>  from sys.dba_tables
+> where tablespace_name = 'YR_TRANS'
+>    and  owner <>
+>   (select max(owner)
+>     from sys.dba_tables
+>   where tablespace_name = 'YR_TRANS');
+>select max(owner) || ')'
+>  from sys.dba_tables
+>where tablespace_name = 'YR_TRANS';
+>spool off
+>
+>select 'create rollback segment '||segment_name||chr(10),
+>       '       tablespace '||tablespace_name||chr(10),
+>       '       storage (initial     '||initial_extent||chr(10),
+>       '                next        '||next_extent||chr(10),
+>       '                minextents  '||min_extents||chr(10),
+>       '                maxextents  '||max_extents||');'
+>    from sys.dba_rollback_segs a,v$rollstat b,v$rollname c
+>   where segment_name <> 'SYSTEM'
+>     and b.usn = c.usn
+>     and a.segment_name = c.name;
+>
+>/* -------------------------------------------------------- */
+>/*  mpkg.sql                                                */
+>/*                                                          */
+>/*  Receive the package name and the owner on the command   */
+>/*  on the command line.                                    */
+>/*                                                          */
+>/*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson  */
+>/* -------------------------------------------------------- */
+>set space 0 ver off pages 0 feed off echo off trimsp on lines 999
+>def package_name = "&1"
+>def owner = "&2"
+>spool package.sql
+>prompt /*
+>prompt
+>prompt SQL to recreate &&owner.'s PACKAGE &&package_name
+>prompt
+>prompt */
+>prompt
+>prompt set echo on feed on
+>prompt spool package
+>prompt
+>select decode(line,1,'create or replace '||text,text)
+>  from sys.dba_source a
+> where type = 'PACKAGE'
+>   and name = upper('&&package_name')
+>   and owner = upper ('&&owner')
+> order by line;
+>prompt /
+>prompt
+>select decode(line,1,'create or replace '||text,text)
+>  from sys.dba_source
+> where type = 'PACKAGE BODY'
+>   and name = upper('&&package_name')
+>   and owner = upper ('&&owner')
+> order by line;
+>prompt /
+>prompt spool off
+>spool off
+>
+>/* -------------------------------------------------------- */
+>/*  mpfn.sql                                                */
+>/*                                                          */
+>/*  Receive the object name and the owner on the command    */
+>/*  on the command line.                                    */
+>/*                                                          */
+>/*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson  */
+>/* -------------------------------------------------------- */
+>def prfn_name = "&1"
+>def owner = "&2"
+>spool prfn
+>prompt
+>prompt /*
+>prompt SQL to recreate &&owner.'s PROCEDURE or FUNCTION &&prfn_name
+>prompt
+>prompt */
+>prompt
+>prompt set echo on feed on
+>prompt spool prfn
+>prompt
+>select rtrim(decode(line, 1,'create or replace '||text, text)) col1
+>  from sys.dba_source
+> where owner = upper('&&owner')
+>   and name = upper('&&prfn_name')
+> order by line;
+>prompt /
+>prompt spool off
+>spool off
+>
+>/* -------------------------------------------------------- */
+>/*  recomp.sql                                              */
+>/*                                                          */
+>/*  Write an SQL*Plus script to recreate the stored         */
+>/*  objects for an entire schema.                           */
+>/*                                                          */
+>/*  Oracle8 Tuning    Corey & Abbey & Dechichio & Abramson  */
+>/* -------------------------------------------------------- */
+>set echo off feed off pages 0
+>spool recomp.do
+>select distinct 'alter '||type||' '||name||' compile;'
+>  from user_source
+> where type <> 'PACKAGE BODY';
+>spool off
+>set echo on feed on
+>spool recomp
+>@recomp.do
+>spool off
+>
+>------------------------------------------------------------------
+>- This is where the notice goes saying
+>- "If the next 3 lines are not here, then the file is incomplete".
+>------------------------------------------------------------------
+>>>  END OF CODE LISTINGS -- THESE LINES MUST BE HERE
+>>>  END OF CODE LISTINGS -- THESE LINES MUST BE HERE
+>>>  END OF CODE LISTINGS -- THESE LINES MUST BE HERE
+>------------------------------------------------------------------
+>- Our question is "How would you know they are missing since, if they
+>-                  were missing, you would never read the notice??"
+>
+>
+>

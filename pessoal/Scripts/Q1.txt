@@ -1,0 +1,46 @@
+SELECT COUNT(*)
+FROM CDR_DATA,
+       FILE_STATUS
+WHERE SUBSCR_NO = :b1 AND
+       SUBSCR_NO_RESETS = :b2 AND
+       CDR_STATUS IN ( :b3,:b4,:b5 ) AND
+       NO_BILL = :1 AND
+       BILL_REF_NO = :1 AND
+       BILL_REF_RESETS = :1 AND
+       TRANS_DT < :b6 AND
+       CDR_DATA.FILE_ID = FILE_STATUS.FILE_ID AND
+       CDR_DATA.FILE_ID_SERV = FILE_STATUS.FILE_ID_SERV AND
+       (FILE_STATUS.FILE_STATUS = :b7 OR
+       FILE_STATUS.FILE_STATUS = :b8 )
+
+
+OPERATION                                          OPTIONS         OBJECT_NAME                    LINHAS
+-------------------------------------------------- --------------- ------------------------------ --
+SELECT STATEMENT                                                                                  Custo =
+ .SORT                                             AGGREGATE
+   .NESTED LOOPS
+     .TABLE ACCESS                                 BY INDEX ROWID  CDR_DATA
+       .INDEX                                      RANGE SCAN      CDR_DATA_XCDR_SUBSCR_NDX
+     .TABLE ACCESS                                 BY INDEX ROWID  FILE_STATUS
+       .INDEX                                      UNIQUE SCAN     FILE_STATUS_XFILE_ID_KEY
+
+UPDATE 
+       CDR_DATA
+SET BILL_REF_NO=:b1,BILL_REF_RESETS=:b2
+WHERE ( MSG_ID,MSG_ID_SERV,MSG_ID2,SPLIT_ROW_NUM ) IN
+       (SELECT MSG_ID,MSG_ID_SERV,MSG_ID2,SPLIT_ROW_NUM
+       FROM BILL_EQUIP_DETAIL BED
+       WHERE BED.INDEX_BILL_REF = :b3 AND
+              BED.INDEX_BILL_REF_RESETS = :b4
+       )
+
+
+OPERATION                                          OPTIONS         OBJECT_NAME                    LINHAS
+-------------------------------------------------- --------------- ------------------------------ --
+UPDATE STATEMENT                                                                                  Custo =
+ .UPDATE                                                           CDR_DATA
+   .NESTED LOOPS
+     .VIEW                                                         VW_NSO_1
+       .SORT                                       UNIQUE
+         .INDEX                                    RANGE SCAN      BILL_EQUIP_DETAIL_1
+     .INDEX                                        UNIQUE SCAN     CDR_DATA_XUNIQUE

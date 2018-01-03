@@ -1,0 +1,89 @@
+Rem
+Rem Programa que cria as tabelas para monitoração de uma banco
+Rem
+prompt Recriando tabela: TABMONITPERF                                                        
+create table TABMONITPERF                                                                    
+   (                                                                                                
+    DATA_COLETA DATE                                                                                
+   ,INSTANCIA VARCHAR2(15)
+   ,BC NUMBER                                                                                       
+   ,DDC NUMBER                                                                                      
+   ,LC NUMBER                                                                                       
+   ,LB NUMBER                                                                                       
+   ,SORT NUMBER                                                                                     
+   ,NUSR NUMBER                                                                                     
+   ,TR NUMBER                                                                                       
+   ,TPS NUMBER
+   ,CPU NUMBER
+   ,PERCPU NUMBER
+   ,LATCH NUMBER                                                                                    
+   ,JW NUMBER
+   ,MEM NUMBER
+   ,MAXMEM NUMBER
+   ,ULOCK NUMBER
+   ,RAL NUMBER
+   ,RCL NUMBER
+   ,NSORT NUMBER
+   )                                                                                                
+   pctfree 10                                                                                       
+   pctused 40                                                                                       
+   storage (initial 1m next 1m pctincrease 0)                                                 
+/                                                                                                   
+prompt Recriando indice: TABMONITPER_I01                                                     
+create index TABMONITPER_I01                                                                 
+on TABMONITPERF                                                                              
+(                                                                                                   
+ DATA_COLETA                                                                                        
+)                                                                                                   
+storage (initial 1m next 100k pctincrease 0)                                                    
+/                                                                                                   
+prompt Recriando tabela: TABMONITIO
+create table TABMONITIO
+   (
+    FILE# NUMBER
+   ,DATA_COLETA DATE
+   ,INSTANCIA VARCHAR2(15) 
+   ,ESCRITA NUMBER
+   ,LEITURA NUMBER
+   ,EPS NUMBER
+   ,LPS NUMBER
+   ,IOPS NUMBER
+   )
+   storage (initial 1m next 1m pctincrease 0)
+/
+prompt Recriando indice: TABMONITIO_I01
+create index TABMONITIO_I01
+on TABMONITIO
+(
+ FILE#
+ ,DATA_COLETA
+)
+storage (initial 1m next 100k pctincrease 0)
+/	 
+prompt Criando tabela TABMONITSQL
+create table TABMONITSQL
+   (
+    DATA_COLETA DATE
+   ,INSTANCIA VARCHAR2(15) 
+   ,ADDRESS RAW(4)
+   ,SQL_TEXT VARCHAR2(1000)
+   ,DR NUMBER
+   ,BG NUMBER
+   ,EXEC NUMBER
+   ,MEM NUMBER
+   ,LINHAS NUMBER
+   ,PARSE NUMBER
+   )
+storage (initial 1m next 1m pctincrease 0)
+/
+prompt Recriando indice: TABMONITSQL_I01
+create unique index TABMONITSQL_I01
+on TABMONITSQL
+(
+ INSTANCIA
+ ,ADDRESS
+)
+storage (initial 1m next 100k pctincrease 0)
+/	 
+alter table TABMONITSQL add primary key (INSTANCIA,ADDRESS)
+/

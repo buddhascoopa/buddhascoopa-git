@@ -1,0 +1,17 @@
+prompt *** (09) Next Extents ***
+prompt *** Lista os segmentos com mais 70% de extents alocados ***
+prompt
+set lines 1000
+set pages 1000
+col segment_name format a40
+SELECT  owner,
+	SEGMENT_NAME,
+	EXTENTS,
+	MAX_EXTENTS
+FROM
+	DBA_SEGMENTS
+WHERE
+	(EXTENTS/MAX_EXTENTS) > 0.70 AND
+	MAX_EXTENTS != 0
+ORDER BY EXTENTS/MAX_EXTENTS
+/

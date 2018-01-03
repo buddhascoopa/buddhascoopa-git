@@ -1,0 +1,27 @@
+select segment_name, bytes/1024/1024 mb
+from dba_segments
+where owner='DATASTORE'
+and segment_type='TABLE'
+and segment_name in
+(
+'H_ACTIVE_CAPABILITIES',
+'H_ACTIVE_SERVICES',
+'H_BILL_CYCLE',
+'H_CODES',
+'H_COLLECTION_CENTRE',
+'H_CONTRACTS',
+'H_CONTRACT_DEVICES',
+'H_CUSTOMERS',
+'H_CUSTOMER_CONTACTS',
+'H_DEALERS',
+'H_DEALER_CONTACTS',
+'H_DIRECTORY_NUMBERS',
+'H_EQUIPMENTS',
+'H_PRICE_GROUP',
+'H_PRODUCTS',
+'H_RATE_PLANS',
+'H_SERVICES',
+'H_SERVICE_PACKAGES',
+'H_SIM_CARDS'
+)
+order by mb

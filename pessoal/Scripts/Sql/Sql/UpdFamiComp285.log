@@ -1,0 +1,51 @@
+SQL> drop index ibge.fami85_1146_1002_FK_I;
+
+Índice eliminado.
+
+SQL> --
+SQL> -- create unique index Fami850_uk1
+SQL> -- on Fami85 (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+SQL> -- tablespace pnadi1985;
+SQL> --
+SQL> set serveroutput on
+SQL> set arrays 5000
+SQL> --
+SQL> execute UpdFami('TPFAM85','Fami85','CODTPFAM');
+Atualizados ate o momento 5000 linha(s) em 17 segundos                                              
+Atualizados ate o momento 10000 linha(s) em 35 segundos                                             
+Atualizados ate o momento 15000 linha(s) em 52 segundos                                             
+Atualizados ate o momento 20000 linha(s) em 68 segundos                                             
+Atualizados ate o momento 25000 linha(s) em 86 segundos                                             
+Atualizados ate o momento 30000 linha(s) em 104 segundos                                            
+Atualizados ate o momento 35000 linha(s) em 122 segundos                                            
+Atualizados ate o momento 40000 linha(s) em 139 segundos                                            
+Atualizados ate o momento 45000 linha(s) em 156 segundos                                            
+Atualizados ate o momento 50000 linha(s) em 173 segundos                                            
+Atualizados ate o momento 55000 linha(s) em 189 segundos                                            
+Atualizados ate o momento 60000 linha(s) em 207 segundos                                            
+Atualizados ate o momento 65000 linha(s) em 224 segundos                                            
+Atualizados ate o momento 70000 linha(s) em 242 segundos                                            
+Atualizados ate o momento 75000 linha(s) em 258 segundos                                            
+Atualizados ate o momento 80000 linha(s) em 275 segundos                                            
+Atualizados ate o momento 85000 linha(s) em 291 segundos                                            
+Atualizados ate o momento 90000 linha(s) em 306 segundos                                            
+Atualizados ate o momento 95000 linha(s) em 322 segundos                                            
+Atualizados ate o momento 100000 linha(s) em 338 segundos                                           
+Atualizados ate o momento 105000 linha(s) em 354 segundos                                           
+Atualizados ate o momento 110000 linha(s) em 369 segundos                                           
+Atualizados ate o momento 115000 linha(s) em 385 segundos                                           
+Atualizados ate o momento 120000 linha(s) em 401 segundos                                           
+Atualizados ate o momento 125000 linha(s) em 417 segundos                                           
+Total atualizado de 127128 linha(s) em 424 segundos                                                 
+
+Procedimento PL/SQL concluído com sucesso.
+
+SQL> --
+SQL> CREATE BITMAP INDEX fami85_1146_1002_FK_I
+  2  ON fami85(CODTPFAM)
+  3  tablespace pnadi1985;
+
+Índice criado.
+
+SQL> --
+SQL> spool off

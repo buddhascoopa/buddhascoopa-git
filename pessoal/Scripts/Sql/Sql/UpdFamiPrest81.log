@@ -1,0 +1,54 @@
+SQL> drop index ibge.fami81_1134_1026_FK_I;
+
+Índice eliminado.
+
+SQL> --
+SQL> create unique index Fami81_uk1
+  2  on Fami81 (codanopesq,codregeogr,codufcenso,codarmetro,nrctrl,nrserie,nrfami)
+  3  tablespace pnadi1981;
+create unique index Fami81_uk1
+                    *
+ERRO na linha 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> --
+SQL> set serveroutput on
+SQL> set arrays 5000
+SQL> --
+SQL> execute UpdFami('FAREN181','Fami81','RDMSFAM101','CODCLFAMIL1');
+Atualizados ate o momento 5000 linha(s) em 14 segundos                                              
+Atualizados ate o momento 10000 linha(s) em 29 segundos                                             
+Atualizados ate o momento 15000 linha(s) em 44 segundos                                             
+Atualizados ate o momento 20000 linha(s) em 59 segundos                                             
+Atualizados ate o momento 25000 linha(s) em 75 segundos                                             
+Atualizados ate o momento 30000 linha(s) em 89 segundos                                             
+Atualizados ate o momento 35000 linha(s) em 104 segundos                                            
+Atualizados ate o momento 40000 linha(s) em 119 segundos                                            
+Atualizados ate o momento 45000 linha(s) em 134 segundos                                            
+Atualizados ate o momento 50000 linha(s) em 149 segundos                                            
+Atualizados ate o momento 55000 linha(s) em 164 segundos                                            
+Atualizados ate o momento 60000 linha(s) em 179 segundos                                            
+Atualizados ate o momento 65000 linha(s) em 194 segundos                                            
+Atualizados ate o momento 70000 linha(s) em 208 segundos                                            
+Atualizados ate o momento 75000 linha(s) em 223 segundos                                            
+Atualizados ate o momento 80000 linha(s) em 238 segundos                                            
+Atualizados ate o momento 85000 linha(s) em 253 segundos                                            
+Atualizados ate o momento 90000 linha(s) em 268 segundos                                            
+Atualizados ate o momento 95000 linha(s) em 282 segundos                                            
+Atualizados ate o momento 100000 linha(s) em 297 segundos                                           
+Atualizados ate o momento 105000 linha(s) em 312 segundos                                           
+Atualizados ate o momento 110000 linha(s) em 327 segundos                                           
+Total atualizado de 110926 linha(s) em 330 segundos                                                 
+
+Procedimento PL/SQL concluído com sucesso.
+
+SQL> --
+SQL> CREATE BITMAP INDEX fami81_1134_1026_FK_I
+  2  ON fami81(CODCLFAMIL1)
+  3  tablespace pnadi1981;
+
+Índice criado.
+
+SQL> --
+SQL> spool off

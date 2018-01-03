@@ -1,0 +1,6 @@
+Entre com o id da conexao: 24
+old   7:   and s.sid = &id
+new   7:   and s.sid =        24
+
+no rows selected
+

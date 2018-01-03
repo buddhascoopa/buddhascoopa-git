@@ -1,0 +1,5 @@
+create user monit identified by monit
+default tablespace users
+temporary tablespace temp1
+quota unlimited on users
+/
