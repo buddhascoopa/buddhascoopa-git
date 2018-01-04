@@ -1,0 +1,32 @@
+#----------------------------------------------------------------------
+# Created by: Razec
+#----------------------------------------------------------------------
+#Esta função altera o nome do arquivo antigo, adicionando a sigla RZC.
+#Em seguida adiciona move o arquivo para outro diretório.
+#----------------------------------------------------------------------
+import os
+
+#Arquivo renomeado.
+def renameMoveFiles():
+ #Local que contém os arquivos a serem alterados.
+ filename = 'C:temp'
+ movefilename = 'C:temptest'
+ #Lista todos os arquivos do diretório.
+ for oldname in os.listdir(filename):
+ #Adiciona RZC_ no nome do arquivo.
+ newname = 'RZC_' + oldname
+ #Adiciona o diretório ao arquivo.
+ oldname = os.path.join(filename, oldname)
+ #Esta definido outro diretório para observar o arquivo sendo renomeado e movido para outro local
+ newname = os.path.join(movefilename, newname)
+ #Renomeia todos arquivos
+ os.rename(oldname, newname)
+
+ print("Renamed")
+
+#---MAIN---
+def main():
+ #Chama a função acima.
+ renameMoveFiles()
+if __name__ == "__main__":
+ main()
