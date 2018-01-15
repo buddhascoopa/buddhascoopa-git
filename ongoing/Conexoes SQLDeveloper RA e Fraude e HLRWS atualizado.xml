@@ -1,0 +1,1525 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<References xmlns="http://xmlns.oracle.com/adf/jndi">
+   <Reference name="RAID-FMS_RAUHX-APP" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@//10.58.193.122:1553/raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>xT6nElmPIJ5/wBwFDTIBXw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.58.193.122</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1553</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-FMS_RAUHX-APP</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>FMS_APP</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-UC DAT HML" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>rauhml</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@10.58.193.125:1549/rauhml</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>XOD3lUQa6UNnBY6H84qaGw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.58.193.125</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1549</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-UC DatHML</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>raid_uc_dat</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="HLRWS HLR22SBE" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Microsoft SQL Server</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:jtds:sqlserver://10.126.172.29:1433/</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.126.172.29</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>Fg1jaqJIWjAVVCEUkyo1DQ==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>net.sourceforge.jtds.jdbc.Driver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1433</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>SQLServer</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>extract_user</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>HLRWS HLR22SBE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>ValidKey</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-UC HML" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>rauhml</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@10.58.193.125:1549/rauhml</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>2S4AY0pQQVqMYiSukQBwTA==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.58.193.125</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1549</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-UC HML</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>wedo_system</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID RC" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="sid">
+            <Contents>rdrcprd1</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@ratpxbd3:1525:rdrcprd1</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>1vTdkdZteE5AEYx2Y1UHfA==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>ratpxbd3</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1525</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID RC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>RAIDRCDAT</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-FMS_RAUHX-ADM" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@//10.58.193.122:1553/raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>xT6nElmPIJ5/wBwFDTIBXw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.58.193.122</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1553</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-FMS_RAUHX-ADM</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>FMS_ADM</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-PI DAT HML" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>raphml</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@10.58.193.127:1549/raphml</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>XOD3lUQa6UNnBY6H84qaGw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.58.193.127</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1549</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-PI DAT HML</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>raid_pi_dat</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="GCOB" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>cobprd</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@cobpx06-vip:1525/cobprd</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>hzGicPGsx4J2dMqzMNzkJQ==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>cobpx06-vip</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1525</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>GCOB</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>gcob_cn</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-FMS_RAUHX-WS" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@//10.58.193.122:1553/raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>xT6nElmPIJ5/wBwFDTIBXw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.58.193.122</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1553</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-FMS_RAUHX-WS</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>wedo_system</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="HLRWS HLR40CTA" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Microsoft SQL Server</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:jtds:sqlserver://10.219.64.52:1433/</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.219.64.52</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>Fg1jaqJIWjAVVCEUkyo1DQ==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>net.sourceforge.jtds.jdbc.Driver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1433</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>SQLServer</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>extract_user</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>HLRWS HLR40CTA</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>ValidKey</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="FMS Archive PRD" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="sid">
+            <Contents>frmoi_A</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@fmspx04:1552:frmoi_A</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>rhGjHKeuzAw=</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>fmspx04</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1552</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>FMS Archive PRD</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>frm11</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="FMS HPMODULE PRD" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="sid">
+            <Contents>hpmodule</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@fmspx02:1553:hpmodule</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>rhGjHKeuzAw=</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>fmspx02</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1553</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>FMS HPMODULE PRD</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>frm11</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-FMS_RAUHX-DAT" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@//10.58.193.122:1553/raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>xT6nElmPIJ5/wBwFDTIBXw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.58.193.122</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1553</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-FMS_RAUHX-DAT</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>FMS_DAT</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-UC DAT PRD" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>rauprd</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@RAUPX03A:1550/rauprd</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>XOD3lUQa6UNnBY6H84qaGw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>RAUPX03A</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1550</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-UC DAT PRD</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>raid_uc_dat</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-PI DAT PRD" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>rapprd</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@RAPPX03A:1550/rapprd</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>XOD3lUQa6UNnBY6H84qaGw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>RAPPX03A</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1550</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-PI DAT PRD</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>raid_pi_dat</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="FMS Case PRD" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="sid">
+            <Contents>frmoi_C</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@fmspx04:1551:frmoi_C</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>rhGjHKeuzAw=</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>fmspx04</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1551</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>FMS Case PRD</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>frm11</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="FMS Subscritores PRD" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="sid">
+            <Contents>subscrit</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@subprd01:1549:subscrit</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>WerGJ+8tT7oKQVV0kRfU4w==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>subprd01</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1549</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>FMS Subscritores PRD</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>orasub</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="HLRWS HLR30BDE" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Microsoft SQL Server</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:jtds:sqlserver://10.125.53.218:1433/</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.125.53.218</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>Fg1jaqJIWjAVVCEUkyo1DQ==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>net.sourceforge.jtds.jdbc.Driver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1433</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>SQLServer</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>extract_user</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>HLRWS HLR30BDE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>ValidKey</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="HLRWS HLR41PAE" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Microsoft SQL Server</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:jtds:sqlserver://10.219.32.52:1433/</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.219.32.52</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>Fg1jaqJIWjAVVCEUkyo1DQ==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>net.sourceforge.jtds.jdbc.Driver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1433</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>SQLServer</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>extract_user</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>HLRWS HLR41PAE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>ValidKey</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="benchmark" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>transact</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@trcrac02:1550/transact</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>L+R3TR8ZGWD6SWPoyBp3Cg==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>trcrac02</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1550</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>benchmark</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>benchmark</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="FMS Detection PRD" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="sid">
+            <Contents>frmoi</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@fmspx04:1550:frmoi</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>rhGjHKeuzAw=</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>fmspx04</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1550</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>FMS Detection PRD</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>frm11</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="transact" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>transact</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@trcrac02:1550/transact</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>L+R3TR8ZGWD6SWPoyBp3Cg==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>trcrac02</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1550</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>transact</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>transact</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="HLRWS HLR23STE" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Microsoft SQL Server</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:jtds:sqlserver://10.126.9.179:1433/</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.126.9.179</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>Fg1jaqJIWjAVVCEUkyo1DQ==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>net.sourceforge.jtds.jdbc.Driver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1433</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>SQLServer</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>extract_user</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>HLRWS HLR23STE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>ValidKey</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-FMS_RAUHX-PORTALAPP" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@//10.58.193.122:1553/raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>xT6nElmPIJ5/wBwFDTIBXw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.58.193.122</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1553</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-FMS_RAUHX-PORTALAPP</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>PORTAL_FMS_APP</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID-FMS_RAUHX-PORTAL" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@//10.58.193.122:1553/raidfms</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>xT6nElmPIJ5/wBwFDTIBXw==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>10.58.193.122</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1553</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>RAID-FMS_RAUHX-PORTAL</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>PORTAL_FMS_ADM</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+   <Reference name="RAID old ecdr_prd" className="oracle.jdeveloper.db.adapter.DatabaseProvider" xmlns="">
+      <Factory className="oracle.jdevimpl.db.adapter.DatabaseProviderFactory1212"/>
+      <RefAddresses>
+         <StringRefAddr addrType="role">
+            <Contents/>
+         </StringRefAddr>
+         <StringRefAddr addrType="SavePassword">
+            <Contents>true</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OracleConnectionType">
+            <Contents>BASIC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="RaptorConnectionType">
+            <Contents>Oracle</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="serviceName">
+            <Contents>ecdrbd</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportPasswordMode">
+            <Contents>Key</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="customUrl">
+            <Contents>jdbc:oracle:thin:@ecdpx02:1525/ecdrbd</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="oraDriverType">
+            <Contents>thin</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="NoPasswordConnection">
+            <Contents>TRUE</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="password">
+            <Contents>gwIdk5HXi1fdy9rIRAyzAA==</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="hostname">
+            <Contents>ecdpx02</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="driver">
+            <Contents>oracle.jdbc.OracleDriver</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="port">
+            <Contents>1525</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="subtype">
+            <Contents>oraJDBC</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="OS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ConnName">
+            <Contents>ecdr_prd</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="KERBEROS_AUTHENTICATION">
+            <Contents>false</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="user">
+            <Contents>ecdrucadm</Contents>
+         </StringRefAddr>
+         <StringRefAddr addrType="ExportKeyChecksum">
+            <Contents>HccWdLfXgKTZwfUJ6wLnYQ==</Contents>
+         </StringRefAddr>
+      </RefAddresses>
+   </Reference>
+</References>
